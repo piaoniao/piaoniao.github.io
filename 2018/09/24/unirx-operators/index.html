@@ -1,13 +1,85 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="utf-8">
-  
+
+
 
   
-  <title>UniRx 学习——操作符 | PiaoNiao&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="UniRx,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
 <meta name="keywords" content="UniRx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UniRx 学习——操作符">
@@ -25,73 +97,214 @@
 <meta name="twitter:title" content="UniRx 学习——操作符">
 <meta name="twitter:description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
 <meta name="twitter:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Create-0.png">
-  
-    <link rel="alternate" href="/atom.xml" title="PiaoNiao&#39;s Blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-</html>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">PiaoNiao&#39;s Blog</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/piaoniao"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-unirx-operators" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/24/unirx-operators/" class="article-date">
-  <time datetime="2018-09-24T05:57:33.000Z" itemprop="datePublished">2018-09-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      UniRx 学习——操作符
-    </h1>
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/piaoniao/2018/09/24/unirx-operators/">
+
+
+
+
+
+  <title>UniRx 学习——操作符 | PiaoNiao's Blog</title>
   
 
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PiaoNiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/piaoniao/2018/09/24/unirx-operators/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PiaoNiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PiaoNiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UniRx 学习——操作符</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-24T13:57:33+08:00">
+                2018-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <p>参考：</p>
 <ul>
@@ -268,138 +481,372 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="https://github.com/piaoniao/2018/09/24/unirx-operators/" data-id="cjpqps781000doug04kr8tvnj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UniRx/">UniRx</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UniRx/" rel="tag"># UniRx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/23/mac-csharp-decompile-command-line-tool/" rel="next" title="Mac C# 反编译命令行工具 —— ILSpy">
+                <i class="fa fa-chevron-left"></i> Mac C# 反编译命令行工具 —— ILSpy
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/25/unirx-micro-coroutine/" rel="prev" title="UniRx —— MicroCoroutine（微协程）">
+                UniRx —— MicroCoroutine（微协程） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
     </footer>
   </div>
   
-    
-<nav id="article-nav">
   
-    <a href="/2018/09/25/unirx-micro-coroutine/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
         
-          UniRx —— MicroCoroutine（微协程）
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">PiaoNiao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建操作"><span class="nav-number">1.</span> <span class="nav-text">创建操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Return-Empty-Never-Throw"><span class="nav-number">1.1.</span> <span class="nav-text">Return / Empty / Never / Throw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create"><span class="nav-number">1.2.</span> <span class="nav-text">Create</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CreateWithState"><span class="nav-number">1.2.1.</span> <span class="nav-text">CreateWithState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CreateSafe"><span class="nav-number">1.2.2.</span> <span class="nav-text">CreateSafe</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Defer"><span class="nav-number">1.3.</span> <span class="nav-text">Defer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#From"><span class="nav-number">1.4.</span> <span class="nav-text">From</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FromCoroutine-——-从协程创建-Observable"><span class="nav-number">1.4.1.</span> <span class="nav-text">FromCoroutine —— 从协程创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromCoroutineVlaue-——-从协程创建-Observable，并发射返回值"><span class="nav-number">1.4.2.</span> <span class="nav-text">FromCoroutineVlaue —— 从协程创建 Observable，并发射返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromMicroCoroutine-——-从微协程创建-Observable"><span class="nav-number">1.4.3.</span> <span class="nav-text">FromMicroCoroutine —— 从微协程创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromAsyncPattern-——-从异步模式创建-Observable"><span class="nav-number">1.4.4.</span> <span class="nav-text">FromAsyncPattern —— 从异步模式创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromEvent-——-从事件创建-Observable"><span class="nav-number">1.4.5.</span> <span class="nav-text">FromEvent —— 从事件创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromEventPattern-——-从事件模式创建-Observable"><span class="nav-number">1.4.6.</span> <span class="nav-text">FromEventPattern —— 从事件模式创建 Observable</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Start"><span class="nav-number">1.5.</span> <span class="nav-text">Start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interval"><span class="nav-number">1.6.</span> <span class="nav-text">Interval</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IntervalFrame"><span class="nav-number">1.6.1.</span> <span class="nav-text">IntervalFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timer"><span class="nav-number">1.7.</span> <span class="nav-text">Timer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Range"><span class="nav-number">1.8.</span> <span class="nav-text">Range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Repeat"><span class="nav-number">1.9.</span> <span class="nav-text">Repeat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RepeatInfinite"><span class="nav-number">1.9.1.</span> <span class="nav-text">RepeatInfinite</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RepeatSafe"><span class="nav-number">1.9.2.</span> <span class="nav-text">RepeatSafe</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变换操作"><span class="nav-number">2.</span> <span class="nav-text">变换操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Select（对应-Rx-文档的-Map）"><span class="nav-number">2.1.</span> <span class="nav-text">Select（对应 Rx 文档的 Map）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SelectMany（对应-Rx-文档的-FlatMap）"><span class="nav-number">2.2.</span> <span class="nav-text">SelectMany（对应 Rx 文档的 FlatMap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContinueWith"><span class="nav-number">2.3.</span> <span class="nav-text">ContinueWith</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer"><span class="nav-number">2.4.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pairwise"><span class="nav-number">2.5.</span> <span class="nav-text">Pairwise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GroupBy"><span class="nav-number">2.6.</span> <span class="nav-text">GroupBy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cast"><span class="nav-number">2.7.</span> <span class="nav-text">Cast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scan"><span class="nav-number">2.8.</span> <span class="nav-text">Scan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aggregate"><span class="nav-number">2.9.</span> <span class="nav-text">Aggregate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤操作"><span class="nav-number">3.</span> <span class="nav-text">过滤操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Throttle（对应-Rx-文档的-Debounce）"><span class="nav-number">3.1.</span> <span class="nav-text">Throttle（对应 Rx 文档的 Debounce）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFirst"><span class="nav-number">3.1.1.</span> <span class="nav-text">ThrottleFirst</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFrame"><span class="nav-number">3.1.2.</span> <span class="nav-text">ThrottleFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFirstFrame"><span class="nav-number">3.1.3.</span> <span class="nav-text">ThrottleFirstFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distinct"><span class="nav-number">3.2.</span> <span class="nav-text">Distinct</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DistinctUntilChanged"><span class="nav-number">3.2.1.</span> <span class="nav-text">DistinctUntilChanged</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Where（对应-Rx-文档的-Filter）"><span class="nav-number">3.3.</span> <span class="nav-text">Where（对应 Rx 文档的 Filter）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OfType"><span class="nav-number">3.3.1.</span> <span class="nav-text">OfType</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#First"><span class="nav-number">3.4.</span> <span class="nav-text">First</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FirstOrDefault"><span class="nav-number">3.4.1.</span> <span class="nav-text">FirstOrDefault</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Single"><span class="nav-number">3.4.2.</span> <span class="nav-text">Single</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SingleOrDefault"><span class="nav-number">3.4.3.</span> <span class="nav-text">SingleOrDefault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IgnoreElements"><span class="nav-number">3.5.</span> <span class="nav-text">IgnoreElements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Last"><span class="nav-number">3.6.</span> <span class="nav-text">Last</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LastOfDefault"><span class="nav-number">3.6.1.</span> <span class="nav-text">LastOfDefault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample"><span class="nav-number">3.7.</span> <span class="nav-text">Sample</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SampleFrame"><span class="nav-number">3.7.1.</span> <span class="nav-text">SampleFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Skip"><span class="nav-number">3.8.</span> <span class="nav-text">Skip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SkipUntil"><span class="nav-number">3.8.1.</span> <span class="nav-text">SkipUntil</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SkipWhile"><span class="nav-number">3.8.2.</span> <span class="nav-text">SkipWhile</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Take"><span class="nav-number">3.9.</span> <span class="nav-text">Take</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeLast"><span class="nav-number">3.9.1.</span> <span class="nav-text">TakeLast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntil"><span class="nav-number">3.9.2.</span> <span class="nav-text">TakeUntil</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeWhile"><span class="nav-number">3.9.3.</span> <span class="nav-text">TakeWhile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntilDestroy"><span class="nav-number">3.9.4.</span> <span class="nav-text">TakeUntilDestroy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntilDisable"><span class="nav-number">3.9.5.</span> <span class="nav-text">TakeUntilDisable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合操作"><span class="nav-number">4.</span> <span class="nav-text">结合操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CombineLatest"><span class="nav-number">4.1.</span> <span class="nav-text">CombineLatest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WithLatestFrom"><span class="nav-number">4.2.</span> <span class="nav-text">WithLatestFrom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WhenAll"><span class="nav-number">4.3.</span> <span class="nav-text">WhenAll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge"><span class="nav-number">4.4.</span> <span class="nav-text">Merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concat"><span class="nav-number">4.5.</span> <span class="nav-text">Concat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StartWith"><span class="nav-number">4.6.</span> <span class="nav-text">StartWith</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Switch"><span class="nav-number">4.7.</span> <span class="nav-text">Switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zip"><span class="nav-number">4.8.</span> <span class="nav-text">Zip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZipLatest"><span class="nav-number">4.8.1.</span> <span class="nav-text">ZipLatest</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">5.</span> <span class="nav-text">错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Catch"><span class="nav-number">5.1.</span> <span class="nav-text">Catch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CatchIgnore"><span class="nav-number">5.1.1.</span> <span class="nav-text">CatchIgnore</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retry"><span class="nav-number">5.2.</span> <span class="nav-text">Retry</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OnErrorRetry"><span class="nav-number">5.2.1.</span> <span class="nav-text">OnErrorRetry</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Finally"><span class="nav-number">5.3.</span> <span class="nav-text">Finally</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助操作"><span class="nav-number">6.</span> <span class="nav-text">辅助操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Delay"><span class="nav-number">6.1.</span> <span class="nav-text">Delay</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DelaySubscription"><span class="nav-number">6.1.1.</span> <span class="nav-text">DelaySubscription</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DelayFrame"><span class="nav-number">6.1.2.</span> <span class="nav-text">DelayFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DelayFrameSubscription"><span class="nav-number">6.1.3.</span> <span class="nav-text">DelayFrameSubscription</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Do"><span class="nav-number">6.2.</span> <span class="nav-text">Do</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnCancel"><span class="nav-number">6.2.1.</span> <span class="nav-text">DoOnCancel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnCompleted"><span class="nav-number">6.2.2.</span> <span class="nav-text">DoOnCompleted</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnError"><span class="nav-number">6.2.3.</span> <span class="nav-text">DoOnError</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnSubscirbe"><span class="nav-number">6.2.4.</span> <span class="nav-text">DoOnSubscirbe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnTerminate"><span class="nav-number">6.2.5.</span> <span class="nav-text">DoOnTerminate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Materialize-Dematerialize"><span class="nav-number">6.3.</span> <span class="nav-text">Materialize/Dematerialize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ObserveOn"><span class="nav-number">6.4.</span> <span class="nav-text">ObserveOn</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ObserveOnMainThread"><span class="nav-number">6.4.1.</span> <span class="nav-text">ObserveOnMainThread</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subscribe"><span class="nav-number">6.5.</span> <span class="nav-text">Subscribe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SubscribeOn"><span class="nav-number">6.6.</span> <span class="nav-text">SubscribeOn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TimeInterval"><span class="nav-number">6.7.</span> <span class="nav-text">TimeInterval</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FrameTimeInterval"><span class="nav-number">6.7.1.</span> <span class="nav-text">FrameTimeInterval</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timeout"><span class="nav-number">6.8.</span> <span class="nav-text">Timeout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TimeoutFrame"><span class="nav-number">6.8.1.</span> <span class="nav-text">TimeoutFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timestamp"><span class="nav-number">6.9.</span> <span class="nav-text">Timestamp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#To"><span class="nav-number">6.10.</span> <span class="nav-text">To</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ToArray"><span class="nav-number">6.10.1.</span> <span class="nav-text">ToArray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToList"><span class="nav-number">6.10.2.</span> <span class="nav-text">ToList</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToAwaitableEnumerator"><span class="nav-number">6.10.3.</span> <span class="nav-text">ToAwaitableEnumerator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToYieldInstruction"><span class="nav-number">6.10.4.</span> <span class="nav-text">ToYieldInstruction</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件和布尔操作"><span class="nav-number">7.</span> <span class="nav-text">条件和布尔操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Amb"><span class="nav-number">7.1.</span> <span class="nav-text">Amb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DefaultIfEmpty"><span class="nav-number">7.2.</span> <span class="nav-text">DefaultIfEmpty</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
         
       </div>
-    </a>
-  
-  
-    <a href="/2018/09/23/mac-csharp-decompile-command-line-tool/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Mac C# 反编译命令行工具 —— ILSpy</div>
-    </a>
-  
-</nav>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PiaoNiao</span>
 
   
-</article>
+</div>
 
-</section>
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
         
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UniRx/">UniRx</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/UniRx/" style="font-size: 10px;">UniRx</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/11/03/noise/">噪声</a>
-          </li>
-        
-          <li>
-            <a href="/2018/10/31/unirx-async/">UniRx——Async</a>
-          </li>
-        
-          <li>
-            <a href="/2018/10/25/unirx/">UniRx 学习 —— 进阶</a>
-          </li>
-        
-          <li>
-            <a href="/2018/10/11/effective-csharp/">Effective C# 读书笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/28/csharp-closure-capture/">C# —— Closure Capture（闭包捕获）</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
+
+
         
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 PiaoNiao<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
+    
 
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
