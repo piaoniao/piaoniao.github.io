@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>UniRx —— MicroCoroutine（微协程） | PiaoNiao&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="参考： UniRx 官方 README Unity3d 10000 Update() calls Unity3d 10000 Update() calls 性能优化 总结微协程是内存高效、快速的协程 worker，是基于 Unity3d 10000 Update() calls 这篇文章阐述的思想实现的 使用 MicroCoroutine 来替换一般的 Coroutine:123456789101">
+<meta name="keywords" content="UniRx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UniRx —— MicroCoroutine（微协程）">
+<meta property="og:url" content="https://github.com/piaoniao/2018/09/25/unirx-micro-coroutine/index.html">
+<meta property="og:site_name" content="PiaoNiao&#39;s Blog">
+<meta property="og:description" content="参考： UniRx 官方 README Unity3d 10000 Update() calls Unity3d 10000 Update() calls 性能优化 总结微协程是内存高效、快速的协程 worker，是基于 Unity3d 10000 Update() calls 这篇文章阐述的思想实现的 使用 MicroCoroutine 来替换一般的 Coroutine:123456789101">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-27T16:32:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UniRx —— MicroCoroutine（微协程）">
+<meta name="twitter:description" content="参考： UniRx 官方 README Unity3d 10000 Update() calls Unity3d 10000 Update() calls 性能优化 总结微协程是内存高效、快速的协程 worker，是基于 Unity3d 10000 Update() calls 这篇文章阐述的思想实现的 使用 MicroCoroutine 来替换一般的 Coroutine:123456789101">
+  
+    <link rel="alternate" href="/atom.xml" title="PiaoNiao&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">PiaoNiao&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/piaoniao"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-unirx-micro-coroutine" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/25/unirx-micro-coroutine/" class="article-date">
+  <time datetime="2018-09-25T15:10:24.000Z" itemprop="datePublished">2018-09-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      UniRx —— MicroCoroutine（微协程）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考：</p>
+<p><a href="https://github.com/neuecc/UniRx#microcoroutine">UniRx 官方 README</a></p>
+<p><a href="https://blogs.unity3d.com/2015/12/23/1k-update-calls/" target="_blank" rel="noopener">Unity3d 10000 Update() calls</a></p>
+<p><a href="https://blog.csdn.net/huutu/article/details/50522585" target="_blank" rel="noopener">Unity3d 10000 Update() calls 性能优化</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>微协程是内存高效、快速的协程 worker，是基于 <a href="https://blogs.unity3d.com/2015/12/23/1k-update-calls/" target="_blank" rel="noopener">Unity3d 10000 Update() calls</a> 这篇文章阐述的思想实现的</p>
+<h4 id="使用-MicroCoroutine-来替换一般的-Coroutine"><a href="#使用-MicroCoroutine-来替换一般的-Coroutine" class="headerlink" title="使用 MicroCoroutine 来替换一般的 Coroutine:"></a>使用 <code>MicroCoroutine</code> 来替换一般的 <code>Coroutine</code>:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int counter;</span><br><span class="line"></span><br><span class="line">IEnumerator Worker()</span><br><span class="line">&#123;</span><br><span class="line">    while(true)</span><br><span class="line">    &#123;</span><br><span class="line">        counter++;</span><br><span class="line">        yield return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    for(var i = 0; i &lt; 10000; i++)</span><br><span class="line">    &#123;</span><br><span class="line">		// fast, memory efficient</span><br><span class="line">		MainThreadDispatcher.StartUpdateMicroCoroutine(Worker());</span><br><span class="line"></span><br><span class="line">		// fast, memory efficient</span><br><span class="line">		Observable.FromMicroCoroutine(Worker).Subscribe(_ =&gt; &#123; &#125;);</span><br><span class="line"></span><br><span class="line">		// slow...</span><br><span class="line">		// StartCoroutine(Worker());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="MicroCoroutine-的局限性"><a href="#MicroCoroutine-的局限性" class="headerlink" title="MicroCoroutine 的局限性"></a><code>MicroCoroutine</code> 的局限性</h4><ul>
+<li><p>只支持 <code>yield return null</code></p>
+</li>
+<li><p>更新时机由启动方法（<code>StartUpdateMicroCoroutine()</code>、<code>StartFixedUpdateMicroCoroutine()</code>、<code>StartEndOfFrameMicroCoroutine()</code>）决定</p>
+</li>
+</ul>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><p><a href="https://blogs.unity3d.com/2015/12/23/1k-update-calls/" target="_blank" rel="noopener">Unity3d 10000 Update() calls</a> 这篇文章主要阐述的思想（建议直接看原文或译文）：</p>
+<h4 id="开展讨论的例子"><a href="#开展讨论的例子" class="headerlink" title="开展讨论的例子"></a>开展讨论的例子</h4><p><code>MonoBehaviour</code> 中可以定义一些特定的魔术方法，如：<code>Update()</code> 等，这些方法通常有以下问题：</p>
+<ul>
+<li>不清楚方法是如何被调用的</li>
+<li>不清楚多个 <code>MonoBehaviour</code> 之间，这些方法的调用顺序</li>
+<li>非 <code>IDE</code> 友好  </li>
+</ul>
+<p>有开发者通过扩展 <code>MonoBehaviour</code> 抽象出一个新的统一的 <code>BaseMonoBehaviour</code>，来减少上述的不足：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public abstract class BaseMonoBehaviour : MonoBehaviour &#123;</span><br><span class="line">    protected virtual void Awake() &#123;&#125;</span><br><span class="line">    protected virtual void Start() &#123;&#125;</span><br><span class="line">    protected virtual void OnEnable() &#123;&#125;</span><br><span class="line">    protected virtual void OnDisable() &#123;&#125;</span><br><span class="line">    protected virtual void Update() &#123;&#125;</span><br><span class="line">    protected virtual void LateUpdate() &#123;&#125;</span><br><span class="line">    protected virtual void FixedUpdate() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但这种做法会带来新的问题：所有继承 <code>BaseMonoBehaviour</code> 的脚本，上述声明的魔术方法都会在特定时机被执行，比如在每帧执行 <code>Update()</code> 方法，即使它是一个空方法</p>
+<h4 id="性能分析调用-10000-个像-Update-这样的方法"><a href="#性能分析调用-10000-个像-Update-这样的方法" class="headerlink" title="性能分析调用 10000 个像 Update() 这样的方法"></a>性能分析调用 10000 个像 <code>Update()</code> 这样的方法</h4><p>具体测试流程略可看原文（PS：原文列出的代码比较难理顺逻辑，推荐结合完整的项目代码分析）</p>
+<p>原文主要做了 3 种操作的耗时对比：</p>
+<ul>
+<li><p><code>Unity</code> 内部迭代 10000 个 <code>MonoBehaviour</code> 的 <code>Update()</code> 方法</p>
+</li>
+<li><p>列表类型循环迭代 10000 个 <code>ManagedUpdateBehavior</code> 的 <code>UpdateMe()</code> 方法</p>
+</li>
+<li><p>数组类型循环迭代 10000 个 <code>ManagedUpdateBehavior</code> 的 <code>UpdateMe()</code> 方法</p>
+</li>
+</ul>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><p><code>Unity</code> 在调用像 <code>Update()</code> 这样的魔法方法时，为了防止游戏出错或崩溃，通常都需要做很多的检测和处理，因此当有大量的 <code>MonoBehaviour</code> 时，这些处理累计的耗时就不能轻易忽视了</p>
+</li>
+<li><p>删除不必要的魔术方法是很有意义的，而上述抽象出 <code>BaseMonoBehaviour</code> 这种做法是不可取的</p>
+</li>
+<li><p>在开发过程中，当考虑到有大量的对象需要在每帧都执行一些操作时，可以参考使用如原文测试例子的 <code>Manager</code> 模式，采用数组结构循环迭代调用对象的更新操作，减少耗时</p>
+</li>
+<li><p><code>MicroCoroutine</code> 就是基于此思想，对一般的 <code>Coroutine</code> 函数以数组结构进行组织，来实现内存高效、快速的协程调用，但同时也有一定的限制（见上文）</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/piaoniao/2018/09/25/unirx-micro-coroutine/" data-id="cjpqps77v0005oug0ix3pac1q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UniRx/">UniRx</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/28/csharp-closure-capture/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C# —— Closure Capture（闭包捕获）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/24/unirx-operators/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">UniRx 学习——操作符</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UniRx/">UniRx</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/UniRx/" style="font-size: 10px;">UniRx</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/03/noise/">噪声</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/unirx-async/">UniRx——Async</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/25/unirx/">UniRx 学习 —— 进阶</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/11/effective-csharp/">Effective C# 读书笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/28/csharp-closure-capture/">C# —— Closure Capture（闭包捕获）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PiaoNiao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

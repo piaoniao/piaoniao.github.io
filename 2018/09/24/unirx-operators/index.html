@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>UniRx 学习——操作符 | PiaoNiao&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
+<meta name="keywords" content="UniRx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UniRx 学习——操作符">
+<meta property="og:url" content="https://github.com/piaoniao/2018/09/24/unirx-operators/index.html">
+<meta property="og:site_name" content="PiaoNiao&#39;s Blog">
+<meta property="og:description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Create-0.png">
+<meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-0.png">
+<meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-1.png">
+<meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-2.png">
+<meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-3.png">
+<meta property="og:updated_time" content="2018-11-06T13:58:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UniRx 学习——操作符">
+<meta name="twitter:description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
+<meta name="twitter:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Create-0.png">
+  
+    <link rel="alternate" href="/atom.xml" title="PiaoNiao&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">PiaoNiao&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/piaoniao"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-unirx-operators" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/24/unirx-operators/" class="article-date">
+  <time datetime="2018-09-24T05:57:33.000Z" itemprop="datePublished">2018-09-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      UniRx 学习——操作符
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考：</p>
+<ul>
+<li><a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Operators.html" target="_blank" rel="noopener">Rx 中文文档</a></li>
+<li><a href="https://kuailey.github.io/DungeonsGame/2016/11/06/UniRx-%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">UniRx 学习</a></li>
+</ul>
+<p>PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 <code>UniRx</code> 与 <code>Rx 文档</code> 中的不同之处</p>
+<h2 id="创建操作"><a href="#创建操作" class="headerlink" title="创建操作"></a>创建操作</h2><h3 id="Return-Empty-Never-Throw"><a href="#Return-Empty-Never-Throw" class="headerlink" title="Return / Empty / Never / Throw"></a>Return / Empty / Never / Throw</h3><ul>
+<li><p><code>Return</code>：创建一个发射指定值的 <code>Observable</code>，对应 <code>Rx 文档</code> 的 <code>Just</code></p>
+<ul>
+<li><code>ReturnUnit</code> 相当于 <code>Observable.Return(Unit.Default)</code></li>
+</ul>
+</li>
+<li><p><code>Empty</code>：创建一个不发射任何数据但是正常终止的 <code>Observable</code></p>
+</li>
+<li><p><code>Never</code>：创建一个不发射数据也不终止的 <code>Observable</code></p>
+</li>
+<li><p><code>Throw</code>：创建一个不发射数据以一个错误终止的 <code>Observable</code></p>
+</li>
+</ul>
+<h3 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h3><p>使用一个函数从头开始创建一个 <code>Observavle</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Observable.Create&lt;int&gt;(observer =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            observer.OnNext(1);</span><br><span class="line">            observer.OnNext(2);</span><br><span class="line">            observer.OnNext(3);</span><br><span class="line">            </span><br><span class="line">            observer.OnCompleted();</span><br><span class="line">        &#125;</span><br><span class="line">        catch (Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            observer.OnError(e);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // Return disposable handler</span><br><span class="line">        return Disposable.Empty;</span><br><span class="line">    &#125;)</span><br><span class="line">    .Subscribe(x =&gt; Debug.Log(&quot;x = &quot; + x));</span><br></pre></td></tr></table></figure>
+<p>需要返回 <code>Disposable</code> 对象：</p>
+<p><img src="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Create-0.png" alt=""></p>
+<ul>
+<li><p>一般情况下，可以返回  <code>Disposable.Empty</code> 或者 <code>null</code>(内部自动使用<code>Disposable.Empty</code>) </p>
+</li>
+<li><p>如果需要监听 <code>disposed()</code>，可以返回 <code>Disposable.Create(()=&gt;{})</code></p>
+</li>
+<li><p>如果需要监听 <code>disposed()</code>，而且闭包需要访问外部变量，为了避免 <a href="https://github.com/neuecc/UniRx/issues/129">closure capture(generated class)</a>，可以选择返回 <code>Disposable.CreateWithState(state,_=&gt;{})</code></p>
+</li>
+</ul>
+<h4 id="CreateWithState"><a href="#CreateWithState" class="headerlink" title="CreateWithState"></a>CreateWithState</h4><p>用于避免闭包捕获外部变量</p>
+<h4 id="CreateSafe"><a href="#CreateSafe" class="headerlink" title="CreateSafe"></a>CreateSafe</h4><p><code>Safe</code> 表示当 <code>onNext</code> 出现异常时，自动注销订阅</p>
+<h3 id="Defer"><a href="#Defer" class="headerlink" title="Defer"></a>Defer</h3><p>直到有观察者订阅时才创建 <code>Observable</code>，并且为每个观察者创建一个新的 <code>Observable</code></p>
+<p>使用 <code>Create</code> VS <code>Defer</code>的简单例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">private IObservable&lt;int&gt; subscribeValueByCreate()</span><br><span class="line">&#123;</span><br><span class="line">    return Observable.Create&lt;int&gt;(o =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        // 可能的耗时操作 </span><br><span class="line">        _value = 1;</span><br><span class="line">        o.OnNext(_value);</span><br><span class="line">        o.OnCompleted();</span><br><span class="line">        return Disposable.Empty;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private IObservable&lt;int&gt; subscribeValueByDefer()</span><br><span class="line">&#123;</span><br><span class="line">    return Observable.Defer(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        // 可能的耗时操作 </span><br><span class="line">        _value = 2;</span><br><span class="line">        return Observable.Return(_value);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详细分析可参考：<a href="https://www.jianshu.com/p/c83996149f5b" target="_blank" rel="noopener">【译】使用RxJava实现延迟订阅</a></p>
+<h3 id="From"><a href="#From" class="headerlink" title="From"></a>From</h3><p>将其它种类的对象和数据类型转换为 <code>Observable</code></p>
+<p><img src="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-0.png" alt=""></p>
+<h4 id="FromCoroutine-——-从协程创建-Observable"><a href="#FromCoroutine-——-从协程创建-Observable" class="headerlink" title="FromCoroutine —— 从协程创建 Observable"></a><code>FromCoroutine</code> —— 从协程创建 <code>Observable</code></h4><p><img src="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-1.png" alt=""></p>
+<ul>
+<li><p>内部 <code>onNext()</code> 只发射 <code>Unit.Default</code>，与 <code>yield return</code> 返回的值和类型都无关，默认在协程完成时触发一次，可传参设置每次调用 <code>yield return</code> 也都触发</p>
+</li>
+<li><p>支持取消操作（向协程传递 <code>CancellationToken</code> 对象）</p>
+</li>
+<li><p>支持向协程传递 <code>IObserver</code> 对象 </p>
+</li>
+</ul>
+<h4 id="FromCoroutineVlaue-——-从协程创建-Observable，并发射返回值"><a href="#FromCoroutineVlaue-——-从协程创建-Observable，并发射返回值" class="headerlink" title="FromCoroutineVlaue —— 从协程创建 Observable，并发射返回值"></a><code>FromCoroutineVlaue</code> —— 从协程创建 <code>Observable</code>，并发射返回值</h4><p><img src="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-2.png" alt=""></p>
+<ul>
+<li><p>内部 <code>onNext()</code> 发射 <code>yield return xxx</code> 返回的值（注意：当调用<code>yield return null</code> 时，不会调用 <code>onNext()</code>???）</p>
+</li>
+<li><p>支持取消操作（向协程传递 <code>CancellationToken</code> 对象）</p>
+</li>
+</ul>
+<h4 id="FromMicroCoroutine-——-从微协程创建-Observable"><a href="#FromMicroCoroutine-——-从微协程创建-Observable" class="headerlink" title="FromMicroCoroutine —— 从微协程创建 Observable"></a><code>FromMicroCoroutine</code> —— 从微协程创建 <code>Observable</code></h4><p>补充：<a href="https://piaoniao.github.io/2018/09/25/unirx-micro-coroutine/" target="_blank" rel="noopener">对 MicroCoroutine 的理解</a></p>
+<p><img src="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-3.png" alt=""></p>
+<ul>
+<li><p>微协程只支持 <code>yield return null</code></p>
+</li>
+<li><p>微协程支持帧数类型：<code>Update</code>、<code>FixedUpdate</code> 和 <code>EndOfFrame</code></p>
+</li>
+<li><p>内部 <code>onNext()</code> 只发射 <code>Unit.Default</code>，默认在微协程完成时触发一次，可传参设置每次调用 <code>yield return null</code> 也都触发</p>
+</li>
+<li><p>支持取消操作（向微协程传递 <code>CancellationToken</code> 对象）</p>
+</li>
+<li><p>支持向微协程传递 <code>IObserver</code> 对象 </p>
+</li>
+</ul>
+<h4 id="FromAsyncPattern-——-从异步模式创建-Observable"><a href="#FromAsyncPattern-——-从异步模式创建-Observable" class="headerlink" title="FromAsyncPattern —— 从异步模式创建 Observable"></a><code>FromAsyncPattern</code> —— 从异步模式创建 <code>Observable</code></h4><p>异步编程模型（APM，Asynchronous Programming Model）不推荐使用???</p>
+<h4 id="FromEvent-——-从事件创建-Observable"><a href="#FromEvent-——-从事件创建-Observable" class="headerlink" title="FromEvent —— 从事件创建 Observable"></a><code>FromEvent</code> —— 从事件创建 <code>Observable</code></h4><p>基于事件的异步模式 (EAP，Event-based Asynchronous Pattern) 不推荐使用???</p>
+<h4 id="FromEventPattern-——-从事件模式创建-Observable"><a href="#FromEventPattern-——-从事件模式创建-Observable" class="headerlink" title="FromEventPattern —— 从事件模式创建 Observable"></a><code>FromEventPattern</code> —— 从事件模式创建 <code>Observable</code></h4><p>基于事件的异步模式 (EAP，Event-based Asynchronous Pattern) 不推荐使用???</p>
+<h3 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h3><p>从委托创建 <code>Observable</code></p>
+<ul>
+<li><p>支持的委托函数： <code>Func&lt;T&gt;</code> 或者 <code>Action</code></p>
+</li>
+<li><p>支持延时</p>
+</li>
+<li><p>注意：<code>Start</code> 默认在异步线程执行</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    Observable.Start(() =&gt; &#123; Debug.Log(&quot;Start&quot;); &#125;);</span><br><span class="line">    Observable.Start(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(&quot;Start&quot;);</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Interval"><a href="#Interval" class="headerlink" title="Interval"></a>Interval</h3><p>创建一个按固定时间间隔发射整数序列的 <code>Observable</code></p>
+<h4 id="IntervalFrame"><a href="#IntervalFrame" class="headerlink" title="IntervalFrame"></a>IntervalFrame</h4><p>创建一个按固定帧数间隔发射整数序列的 <code>Observable</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(_ =&gt; &#123; &#125;);</span><br><span class="line">    Observable.IntervalFrame(16, FrameCountType.FixedUpdate).Subscribe(_ =&gt; &#123; &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h3><p>创建一个 <code>Observable</code>，它在一个给定的延迟后发射一个特殊的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(l =&gt; Debug.Log(&quot; l = &quot; + l));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h3><p>创建一个发射特定整数序列的 <code>Observable</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    Observable.Range(1, 100).Subscribe(x =&gt; &#123; &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>创建一个发射特定数据重复多次的 <code>Observable</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    Observable.Repeat(&quot;hello&quot;, 3).Subscribe(s =&gt; &#123; &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="RepeatInfinite"><a href="#RepeatInfinite" class="headerlink" title="RepeatInfinite"></a>RepeatInfinite</h4><p>无限重复</p>
+<h4 id="RepeatSafe"><a href="#RepeatSafe" class="headerlink" title="RepeatSafe"></a>RepeatSafe</h4><p>与 <code>Repeat</code> 相同，但若连续出现 <code>onComplete()</code> 时，重复停止</p>
+<h2 id="变换操作"><a href="#变换操作" class="headerlink" title="变换操作"></a>变换操作</h2><h3 id="Select（对应-Rx-文档的-Map）"><a href="#Select（对应-Rx-文档的-Map）" class="headerlink" title="Select（对应 Rx 文档的 Map）"></a>Select（对应 Rx 文档的 Map）</h3><p>对 <code>Observable</code> 发射的每一项数据应用一个函数，执行变换操作</p>
+<p>变换函数支持输出数据序号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable.Range(1, 3)</span><br><span class="line">    .Select((x, i) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(&quot;i = &quot; + i);// 序号</span><br><span class="line">        return x * i;</span><br><span class="line">    &#125;)</span><br><span class="line">    .Subscribe(x =&gt; Debug.Log(&quot;x = &quot; + x));</span><br></pre></td></tr></table></figure>
+<h3 id="SelectMany（对应-Rx-文档的-FlatMap）"><a href="#SelectMany（对应-Rx-文档的-FlatMap）" class="headerlink" title="SelectMany（对应 Rx 文档的 FlatMap）"></a>SelectMany（对应 Rx 文档的 FlatMap）</h3><p>将一个发射数据的 <code>Observable</code> 变换为多个 <code>Observables</code>，然后将它们发射的数据合并后放进一个单独的 <code>Observable</code></p>
+<p>注意：<code>SelectMany</code> 对这些 <code>Observables</code> 发射的数据做的是合并(merge)操作，因此它们可能是交错的</p>
+<h3 id="ContinueWith"><a href="#ContinueWith" class="headerlink" title="ContinueWith"></a>ContinueWith</h3><p>将原 <code>Observable</code> 发射的最后一个值变换为一个新的 <code>Observable</code>，并发射新 <code>Observable</code> 的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Observable.Range(0, 10)</span><br><span class="line">    .ContinueWith(i =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(&quot;i = &quot; + i);</span><br><span class="line">        return Observable.Range(i, 3);</span><br><span class="line">    &#125;)</span><br><span class="line">    .Subscribe(x =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(&quot;x = &quot; + x);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">// 输出：</span><br><span class="line">// i = 9</span><br><span class="line">// x = 9，x = 10，x = 11</span><br></pre></td></tr></table></figure>
+<h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><p>定期收集 <code>Observable</code> 的数据放进一个数据包裹，然后发射这些数据包裹，而不是一次发射一个值</p>
+<h3 id="Pairwise"><a href="#Pairwise" class="headerlink" title="Pairwise"></a>Pairwise</h3><p>将原 <code>Observable</code> 发射的相邻的数据打包成一个 <code>Pair</code> 数据发射（只有 1 个数据时，不发射新数据）</p>
+<h3 id="GroupBy"><a href="#GroupBy" class="headerlink" title="GroupBy"></a>GroupBy</h3><p>将一个 <code>Observable</code> 分拆为一些 <code>Observables</code> 集合，它们中的每一个发射原始<code>Observable</code> 的一个子序列</p>
+<h3 id="Cast"><a href="#Cast" class="headerlink" title="Cast"></a>Cast</h3><p>将原始 <code>Observable</code> 发射的每一项数据都强制转换为一个指定的类型，然后再发射数据</p>
+<p>PS：<code>Cast</code> 内部使用强转，失败会报异常</p>
+<h3 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h3><p>扫描：连续地对数据序列的每一项应用一个函数，然后连续发射结果</p>
+<h3 id="Aggregate"><a href="#Aggregate" class="headerlink" title="Aggregate"></a>Aggregate</h3><p>聚合：连续地对数据序列的每一项应用一个函数，然后只发射结果</p>
+<h2 id="过滤操作"><a href="#过滤操作" class="headerlink" title="过滤操作"></a>过滤操作</h2><h3 id="Throttle（对应-Rx-文档的-Debounce）"><a href="#Throttle（对应-Rx-文档的-Debounce）" class="headerlink" title="Throttle（对应 Rx 文档的 Debounce）"></a>Throttle（对应 Rx 文档的 Debounce）</h3><p>仅在过了一段指定的时间还没发射数据时才发射一个数据</p>
+<h4 id="ThrottleFirst"><a href="#ThrottleFirst" class="headerlink" title="ThrottleFirst"></a>ThrottleFirst</h4><p>定期发射这个时间段里源 <code>Observable</code> 发射的第一个数据</p>
+<h4 id="ThrottleFrame"><a href="#ThrottleFrame" class="headerlink" title="ThrottleFrame"></a>ThrottleFrame</h4><p>仅在过了一段指定的帧数还没发射数据时才发射一个数据，可以指定帧数类型</p>
+<h4 id="ThrottleFirstFrame"><a href="#ThrottleFirstFrame" class="headerlink" title="ThrottleFirstFrame"></a>ThrottleFirstFrame</h4><p>定期发射指定的帧数时间段里源 <code>Observable</code> 发射的第一帧</p>
+<h3 id="Distinct"><a href="#Distinct" class="headerlink" title="Distinct"></a>Distinct</h3><p>抑制（过滤掉）重复的数据项</p>
+<h4 id="DistinctUntilChanged"><a href="#DistinctUntilChanged" class="headerlink" title="DistinctUntilChanged"></a>DistinctUntilChanged</h4><p>抑制（过滤掉）与直接前驱数据相同的数据项</p>
+<h3 id="Where（对应-Rx-文档的-Filter）"><a href="#Where（对应-Rx-文档的-Filter）" class="headerlink" title="Where（对应 Rx 文档的 Filter）"></a>Where（对应 Rx 文档的 Filter）</h3><p>只发射通过了谓词测试的数据项</p>
+<p>谓词函数支持输出数据序号</p>
+<h4 id="OfType"><a href="#OfType" class="headerlink" title="OfType"></a>OfType</h4><p>作用与 <code>Cast</code> 相似，但内部在强转前会用 <code>is</code> 先判断类型，会忽略不能转换类型的数据</p>
+<h3 id="First"><a href="#First" class="headerlink" title="First"></a>First</h3><p>只发射第一项（或者满足某个条件的第一项）数据</p>
+<h4 id="FirstOrDefault"><a href="#FirstOrDefault" class="headerlink" title="FirstOrDefault"></a>FirstOrDefault</h4><p>只发射第一项数据，没有则发射 <code>null</code></p>
+<h4 id="Single"><a href="#Single" class="headerlink" title="Single"></a>Single</h4><p>如果原始 <code>Observable</code> 发射超过一个的数据，会抛出异常</p>
+<h4 id="SingleOrDefault"><a href="#SingleOrDefault" class="headerlink" title="SingleOrDefault"></a>SingleOrDefault</h4><p>如果原始 <code>Observable</code> 发射超过一个的数据，会发射错误通知</p>
+<h3 id="IgnoreElements"><a href="#IgnoreElements" class="headerlink" title="IgnoreElements"></a>IgnoreElements</h3><p>不发射任何数据，只发射 <code>Observable</code> 的终止（或错误）通知</p>
+<h3 id="Last"><a href="#Last" class="headerlink" title="Last"></a>Last</h3><p>只发射最后一项（或者满足某个条件的最后一项）数据</p>
+<h4 id="LastOfDefault"><a href="#LastOfDefault" class="headerlink" title="LastOfDefault"></a>LastOfDefault</h4><p>只发射最后一项（或者满足某个条件的最后一项）数据，没有则发射 <code>null</code></p>
+<h3 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h3><p>采样：定期发射 <code>Observable</code> 最近发射的数据项</p>
+<h4 id="SampleFrame"><a href="#SampleFrame" class="headerlink" title="SampleFrame"></a>SampleFrame</h4><p>帧采样</p>
+<h3 id="Skip"><a href="#Skip" class="headerlink" title="Skip"></a>Skip</h3><p>抑制 <code>Observable</code> 发射的前 N 项数据</p>
+<h4 id="SkipUntil"><a href="#SkipUntil" class="headerlink" title="SkipUntil"></a>SkipUntil</h4><p>跳过源 <code>Observable</code> 发出的值，直到提供的 <code>Observable</code> 发出值</p>
+<h4 id="SkipWhile"><a href="#SkipWhile" class="headerlink" title="SkipWhile"></a>SkipWhile</h4><p>跳过源 <code>Observable</code> 发出的值，直到提供的表达式结果为 <code>false</code></p>
+<h3 id="Take"><a href="#Take" class="headerlink" title="Take"></a>Take</h3><p>只发射前面的 N 项数据</p>
+<h4 id="TakeLast"><a href="#TakeLast" class="headerlink" title="TakeLast"></a>TakeLast</h4><p>只发射后面 N 项数据</p>
+<h4 id="TakeUntil"><a href="#TakeUntil" class="headerlink" title="TakeUntil"></a>TakeUntil</h4><p>发射前面的 N 项数据，直到提供的 <code>Observable</code> 发出值</p>
+<h4 id="TakeWhile"><a href="#TakeWhile" class="headerlink" title="TakeWhile"></a>TakeWhile</h4><p>发射前面的 N 项数据，直到提供的表达式结果为 <code>false</code></p>
+<h4 id="TakeUntilDestroy"><a href="#TakeUntilDestroy" class="headerlink" title="TakeUntilDestroy"></a>TakeUntilDestroy</h4><p>发射前面的 N 项数据，直到 <code>Unity</code> 组件被破环</p>
+<h4 id="TakeUntilDisable"><a href="#TakeUntilDisable" class="headerlink" title="TakeUntilDisable"></a>TakeUntilDisable</h4><p>发射前面的 N 项数据，直到 <code>Unity</code> 组件被禁用</p>
+<h2 id="结合操作"><a href="#结合操作" class="headerlink" title="结合操作"></a>结合操作</h2><h3 id="CombineLatest"><a href="#CombineLatest" class="headerlink" title="CombineLatest"></a>CombineLatest</h3><p>当两个 <code>Observables</code> 中的任何一个发射了数据时，使用一个函数结合每个 <code>Observable</code> 发射的最近数据项，并且基于这个函数的结果发射数据</p>
+<h3 id="WithLatestFrom"><a href="#WithLatestFrom" class="headerlink" title="WithLatestFrom"></a>WithLatestFrom</h3><p>类似于 <code>CombineLatest</code>，但是只在单个原始 Observable 发射了一条数据时才发射数据</p>
+<h3 id="WhenAll"><a href="#WhenAll" class="headerlink" title="WhenAll"></a>WhenAll</h3><p>// Observable.WhenAll is for parallel asynchronous operation</p>
+<p>// (It’s like Observable.Zip but specialized for single async operations like Task.WhenAll)</p>
+<p>只会将多个源 <code>Observable</code> 最后发射的数据组合成新数据并发射</p>
+<h3 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h3><p>合并多个 <code>Observables</code> 的发射物</p>
+<p>使用 <code>Merge</code> 操作符你可以将多个 <code>Observables</code> 的输出合并，就好像它们是一个单个的 <code>Observable</code> 一样</p>
+<p><code>Merge</code> 可能会让合并的 <code>Observables</code> 发射的数据交错（有一个类似的操作符 <code>Concat</code> 不会让数据交错，它会按顺序一个接着一个发射多个 Observables 的发射物）</p>
+<h3 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h3><p>类似 <code>Merge</code>，但组合的数据不会发生交错</p>
+<h3 id="StartWith"><a href="#StartWith" class="headerlink" title="StartWith"></a>StartWith</h3><p>在数据序列的开头插入一条指定的项</p>
+<h3 id="Switch"><a href="#Switch" class="headerlink" title="Switch"></a>Switch</h3><p>将一个发射多个 <code>Observables</code> 的 <code>Observable</code> 转换成另一个单独的 <code>Observable</code>，后者发射那些 <code>Observables</code> 最近发射的数据项</p>
+<p>注意：当原始 <code>Observable</code> 发射了一个新的 <code>Observable</code> 时（不是这个新的<code>Observable</code> 发射了一条数据时），它将取消订阅之前的那个 <code>Observable</code>。（简单理解：切换一个发数据的 <code>Observable</code>）</p>
+<h3 id="Zip"><a href="#Zip" class="headerlink" title="Zip"></a>Zip</h3><p>通过一个函数将多个 Observables 的发射物结合到一起，基于这个函数的结果为每个结合体发射单个数据项</p>
+<p>只发射与发射数据项最少的那个 Observable 一样多的数据</p>
+<h4 id="ZipLatest"><a href="#ZipLatest" class="headerlink" title="ZipLatest"></a>ZipLatest</h4><p>类似 <code>Zip</code>，不同的是：<code>ZipLatest</code> 会将多个源 Observables 最新发射的那个值<br>结合，这意味着如果某个源 <code>Observable</code> 此时已发射多个值也只会取最新值去结合，其余的抛弃</p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><h3 id="Catch"><a href="#Catch" class="headerlink" title="Catch"></a>Catch</h3><p>从 <code>onError</code> 通知中恢复发射数据</p>
+<p><code>Catch</code> 操作符拦截原始 <code>Observable</code> 的 <code>onError</code> 通知，将它替换为其它的数据项或数据序列，让产生的 <code>Observable</code> 能够正常终止或者根本不终止</p>
+<h4 id="CatchIgnore"><a href="#CatchIgnore" class="headerlink" title="CatchIgnore"></a>CatchIgnore</h4><p><code>Catch</code> 操作符拦截原始 <code>Observable</code> 的 <code>onError</code> 通知，将它替换为 <code>Observable.Empty</code></p>
+<h3 id="Retry"><a href="#Retry" class="headerlink" title="Retry"></a>Retry</h3><p>如果原始 <code>Observable</code> 遇到错误，重新订阅它期望它能正常终止</p>
+<p><code>Retry</code> 操作符不会将原始 <code>Observable</code> 的 <code>onError</code> 通知传递给观察者，它会订阅这个<code>Observable</code>，再给它一次机会无错误地完成它的数据序列</p>
+<p><code>Retry</code> 总是传递 <code>onNext</code> 通知给观察者，由于重新订阅，可能会造成数据项重复</p>
+<h4 id="OnErrorRetry"><a href="#OnErrorRetry" class="headerlink" title="OnErrorRetry"></a>OnErrorRetry</h4><p>与 <code>Retry</code> 类似，可进行 <code>onError</code> 处理</p>
+<h3 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h3><p>原始 <code>Observable</code> 正常完成或遇到错误都会调起闭包方法</p>
+<h2 id="辅助操作"><a href="#辅助操作" class="headerlink" title="辅助操作"></a>辅助操作</h2><h3 id="Delay"><a href="#Delay" class="headerlink" title="Delay"></a>Delay</h3><p>延迟一段指定的时间再发射来自 <code>Observable</code> 的发射物</p>
+<h4 id="DelaySubscription"><a href="#DelaySubscription" class="headerlink" title="DelaySubscription"></a>DelaySubscription</h4><p>可以延迟订阅原始 <code>Observable</code></p>
+<h4 id="DelayFrame"><a href="#DelayFrame" class="headerlink" title="DelayFrame"></a>DelayFrame</h4><h4 id="DelayFrameSubscription"><a href="#DelayFrameSubscription" class="headerlink" title="DelayFrameSubscription"></a>DelayFrameSubscription</h4><h3 id="Do"><a href="#Do" class="headerlink" title="Do"></a>Do</h3><h4 id="DoOnCancel"><a href="#DoOnCancel" class="headerlink" title="DoOnCancel"></a>DoOnCancel</h4><h4 id="DoOnCompleted"><a href="#DoOnCompleted" class="headerlink" title="DoOnCompleted"></a>DoOnCompleted</h4><h4 id="DoOnError"><a href="#DoOnError" class="headerlink" title="DoOnError"></a>DoOnError</h4><h4 id="DoOnSubscirbe"><a href="#DoOnSubscirbe" class="headerlink" title="DoOnSubscirbe"></a>DoOnSubscirbe</h4><h4 id="DoOnTerminate"><a href="#DoOnTerminate" class="headerlink" title="DoOnTerminate"></a>DoOnTerminate</h4><h3 id="Materialize-Dematerialize"><a href="#Materialize-Dematerialize" class="headerlink" title="Materialize/Dematerialize"></a>Materialize/Dematerialize</h3><p><code>Materialize</code> 将数据项和事件通知都当做数据项发射，<code>Dematerialize</code> 刚好相反</p>
+<p><code>Materialize</code> 将来自原始 <code>Observable</code> 的通知转换为 <code>Notification</code> 对象，然后它返回的 <code>Observable</code> 会发射这些数据</p>
+<h3 id="ObserveOn"><a href="#ObserveOn" class="headerlink" title="ObserveOn"></a>ObserveOn</h3><p>指定一个观察者在哪个调度器上观察这个 <code>Observable</code></p>
+<h4 id="ObserveOnMainThread"><a href="#ObserveOnMainThread" class="headerlink" title="ObserveOnMainThread"></a>ObserveOnMainThread</h4><h3 id="Subscribe"><a href="#Subscribe" class="headerlink" title="Subscribe"></a>Subscribe</h3><p>操作来自 <code>Observable</code> 的发射物和通知</p>
+<h3 id="SubscribeOn"><a href="#SubscribeOn" class="headerlink" title="SubscribeOn"></a>SubscribeOn</h3><p>指定Observable自身在哪个调度器上执行</p>
+<h3 id="TimeInterval"><a href="#TimeInterval" class="headerlink" title="TimeInterval"></a>TimeInterval</h3><p>将一个发射数据的 <code>Observable</code> 转换为发射那些数据发射时间间隔的 <code>Observable</code></p>
+<h4 id="FrameTimeInterval"><a href="#FrameTimeInterval" class="headerlink" title="FrameTimeInterval"></a>FrameTimeInterval</h4><h3 id="Timeout"><a href="#Timeout" class="headerlink" title="Timeout"></a>Timeout</h3><p>对原始 <code>Observable</code> 的一个镜像，如果过了一个指定的时长仍没有发射数据，它会发一个错误通知</p>
+<h4 id="TimeoutFrame"><a href="#TimeoutFrame" class="headerlink" title="TimeoutFrame"></a>TimeoutFrame</h4><h3 id="Timestamp"><a href="#Timestamp" class="headerlink" title="Timestamp"></a>Timestamp</h3><p>给 <code>Observable</code> 发射的数据项附加一个时间戳</p>
+<h3 id="To"><a href="#To" class="headerlink" title="To"></a>To</h3><p>将 <code>Observable</code> 转换为另一个对象或数据结构</p>
+<h4 id="ToArray"><a href="#ToArray" class="headerlink" title="ToArray"></a>ToArray</h4><h4 id="ToList"><a href="#ToList" class="headerlink" title="ToList"></a>ToList</h4><h4 id="ToAwaitableEnumerator"><a href="#ToAwaitableEnumerator" class="headerlink" title="ToAwaitableEnumerator"></a>ToAwaitableEnumerator</h4><p>过时的，推荐使用 <code>ToYieldInstruction</code></p>
+<h4 id="ToYieldInstruction"><a href="#ToYieldInstruction" class="headerlink" title="ToYieldInstruction"></a>ToYieldInstruction</h4><p>将 <code>Observable</code> 转为 <code>Coroutine</code></p>
+<h2 id="条件和布尔操作"><a href="#条件和布尔操作" class="headerlink" title="条件和布尔操作"></a>条件和布尔操作</h2><h3 id="Amb"><a href="#Amb" class="headerlink" title="Amb"></a>Amb</h3><p>给定两个或多个 <code>Observables</code>，它只发射首先发射数据或通知的那个 <code>Observable</code> 的所有数据</p>
+<h3 id="DefaultIfEmpty"><a href="#DefaultIfEmpty" class="headerlink" title="DefaultIfEmpty"></a>DefaultIfEmpty</h3><p>发射来自原始 <code>Observable</code> 的值，如果原始 <code>Observable</code> 没有发射任何值，就发射一个默认值</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/piaoniao/2018/09/24/unirx-operators/" data-id="cjpqps781000doug04kr8tvnj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UniRx/">UniRx</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/25/unirx-micro-coroutine/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          UniRx —— MicroCoroutine（微协程）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/23/mac-csharp-decompile-command-line-tool/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mac C# 反编译命令行工具 —— ILSpy</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UniRx/">UniRx</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/UniRx/" style="font-size: 10px;">UniRx</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/03/noise/">噪声</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/unirx-async/">UniRx——Async</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/25/unirx/">UniRx 学习 —— 进阶</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/11/effective-csharp/">Effective C# 读书笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/28/csharp-closure-capture/">C# —— Closure Capture（闭包捕获）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PiaoNiao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>UniRx 学习 —— 进阶 | PiaoNiao&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="参考：  UniRx README  之前一篇博客 UniRx 学习——操作符 总结到最后变成了对 Rx 操作符的复习😂，所以这次有针对性的来学习一下 UniRx 这个框架（主要是官方文档） 网络操作使用 ObservableWWW （其核心就是对 WWW 进行封装）进行异步网络操作：  支持 GET/POST 方法 支持订阅 WWW、string、byte[]、AssetBundle格式的返回">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UniRx 学习 —— 进阶">
+<meta property="og:url" content="https://github.com/piaoniao/2018/10/25/unirx/index.html">
+<meta property="og:site_name" content="PiaoNiao&#39;s Blog">
+<meta property="og:description" content="参考：  UniRx README  之前一篇博客 UniRx 学习——操作符 总结到最后变成了对 Rx 操作符的复习😂，所以这次有针对性的来学习一下 UniRx 这个框架（主要是官方文档） 网络操作使用 ObservableWWW （其核心就是对 WWW 进行封装）进行异步网络操作：  支持 GET/POST 方法 支持订阅 WWW、string、byte[]、AssetBundle格式的返回">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-ObservableWWW-00.png">
+<meta property="og:updated_time" content="2018-10-31T14:28:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UniRx 学习 —— 进阶">
+<meta name="twitter:description" content="参考：  UniRx README  之前一篇博客 UniRx 学习——操作符 总结到最后变成了对 Rx 操作符的复习😂，所以这次有针对性的来学习一下 UniRx 这个框架（主要是官方文档） 网络操作使用 ObservableWWW （其核心就是对 WWW 进行封装）进行异步网络操作：  支持 GET/POST 方法 支持订阅 WWW、string、byte[]、AssetBundle格式的返回">
+<meta name="twitter:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-ObservableWWW-00.png">
+  
+    <link rel="alternate" href="/atom.xml" title="PiaoNiao&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">PiaoNiao&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/piaoniao"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-unirx" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/25/unirx/" class="article-date">
+  <time datetime="2018-10-25T13:57:03.000Z" itemprop="datePublished">2018-10-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      UniRx 学习 —— 进阶
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考：</p>
+<ul>
+<li><a href="https://github.com/neuecc/UniRx">UniRx README</a></li>
+</ul>
+<p>之前一篇博客 <a href="https://piaoniao.github.io/2018/09/24/unirx-operators/" target="_blank" rel="noopener">UniRx 学习——操作符</a> 总结到最后变成了对 <code>Rx</code> 操作符的复习😂，所以这次有针对性的来学习一下 <code>UniRx</code> 这个框架（主要是官方文档）</p>
+<h2 id="网络操作"><a href="#网络操作" class="headerlink" title="网络操作"></a>网络操作</h2><p>使用 <code>ObservableWWW</code> （其核心就是对 <code>WWW</code> 进行封装）进行异步网络操作：</p>
+<ul>
+<li>支持 <code>GET</code>/<code>POST</code> 方法</li>
+<li>支持订阅 <code>WWW</code>、<code>string</code>、<code>byte[]</code>、<code>AssetBundle</code>格式的返回</li>
+<li>支持进度回调</li>
+<li>支持错误处理</li>
+<li>支持取消请求</li>
+<li>可搭配 <code>Observable.WhenAll</code> 进行并行异步操作</li>
+</ul>
+<p><img src="http://pf7j6kfg3.bkt.clouddn.com/UniRx-ObservableWWW-00.png" alt=""></p>
+<h2 id="结合协程（Coroutines）"><a href="#结合协程（Coroutines）" class="headerlink" title="结合协程（Coroutines）"></a>结合协程（Coroutines）</h2><h4 id="FromCoroutine"><a href="#FromCoroutine" class="headerlink" title="FromCoroutine"></a>FromCoroutine</h4><p>将协程转成 <code>Observable</code></p>
+<h4 id="FromCoroutineVlaue"><a href="#FromCoroutineVlaue" class="headerlink" title="FromCoroutineVlaue"></a>FromCoroutineVlaue</h4><p>从协程转成 <code>Observable</code>，并发射 <code>yield return</code> 返回的值</p>
+<h4 id="FromMicroCoroutine"><a href="#FromMicroCoroutine" class="headerlink" title="FromMicroCoroutine"></a>FromMicroCoroutine</h4><p>将微协程转成 <code>Observable</code></p>
+<h4 id="ToYieldInstruction"><a href="#ToYieldInstruction" class="headerlink" title="ToYieldInstruction"></a>ToYieldInstruction</h4><p>将 <code>Observable</code> 转化成协程</p>
+<h4 id="StartAsCoroutine"><a href="#StartAsCoroutine" class="headerlink" title="StartAsCoroutine"></a>StartAsCoroutine</h4><p>AutoStart observable as coroutine</p>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h4 id="Observable-Start-默认在异步线程运行"><a href="#Observable-Start-默认在异步线程运行" class="headerlink" title="Observable.Start() 默认在异步线程运行"></a>Observable.Start() 默认在异步线程运行</h4><h4 id="默认调度器（DefaultScheduler）"><a href="#默认调度器（DefaultScheduler）" class="headerlink" title="默认调度器（DefaultScheduler）"></a>默认调度器（DefaultScheduler）</h4><p>除了 <code>Observable.Start()</code>，<code>UniRx</code> 默认基于时间的操作符都使用 <code>Scheduler.MainThread</code></p>
+<p><code>Scheduler.MainThread</code> 受 <code>Time.timeScale</code> 的影响，若希望忽略时间缩放可使用 <code>Scheduler.MainThreadIgnoreTimeScale</code></p>
+<h2 id="MonoBehaviour-触发器"><a href="#MonoBehaviour-触发器" class="headerlink" title="MonoBehaviour 触发器"></a>MonoBehaviour 触发器</h2><p> <code>Unity</code> 的 <code>GameObject</code> 可以通过添加 <code>UniRx.Triggers</code> 下的触发器组件（<code>ObservableXxxTrigger</code>）来处理事件，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cube.AddComponent&lt;ObservableUpdateTrigger&gt;()</span><br><span class="line">    .UpdateAsObservable()</span><br><span class="line">    .SampleFrame(30)</span><br><span class="line">    .Subscribe(x =&gt; Debug.Log(&quot;cube&quot;), () =&gt; Debug.Log(&quot;destroy&quot;));</span><br></pre></td></tr></table></figure>
+<p><code>Unity</code> 的 <code>GameObject/Component</code> 也可以直接通过扩展方法（<code>***AsObservable</code>）使用 <code>UniRx.Triggers</code>，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// All events can subscribe by ***AsObservable</span><br><span class="line">this.OnMouseDownAsObservable()</span><br><span class="line">    .SelectMany(_ =&gt; this.UpdateAsObservable())</span><br><span class="line">    .TakeUntil(this.OnMouseUpAsObservable())</span><br><span class="line">    .Select(_ =&gt; Input.mousePosition)</span><br><span class="line">    .Subscribe(x =&gt; Debug.Log(x));</span><br></pre></td></tr></table></figure>
+<p>罗列一下 <code>UniRx.Triggers</code> 下支持的触发器（不够用可自定义）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">ObservableAnimatorTrigger    	// 动画：移动、反向运动</span><br><span class="line">ObservableBeginDragTrigger    // 开始拖动</span><br><span class="line">ObservableCancelTrigger    	// 取消</span><br><span class="line">ObservableCanvasGroupChangedTrigger    </span><br><span class="line">ObservableCollision2DTrigger    // 2D 碰撞：进入、停留、退出</span><br><span class="line">ObservableCollisionTrigger    // 碰撞：进入、停留、退出</span><br><span class="line">ObservableDeselectTrigger		// 取消选中</span><br><span class="line">ObservableDestroyTrigger		// 破坏</span><br><span class="line">ObservableDragTrigger			// 拖动</span><br><span class="line">ObservableDropTrigger			// 释放</span><br><span class="line">ObservableEnableTrigger			// 激活</span><br><span class="line">ObservableEndDragTrigger		// 结束拖动</span><br><span class="line">ObservableEventTrigger			// 所有事件</span><br><span class="line">ObservableFixedUpdateTrigger		// FixedUpdate</span><br><span class="line">ObservableInitializePotentialDragTrigger    </span><br><span class="line">ObservableJointTrigger			// 物理关节断开</span><br><span class="line">ObservableLateUpdateTrigger	// LateUpdate</span><br><span class="line">ObservableMouseTrigger			// 鼠标：按下、拖动、进入、悬停、退出、提起</span><br><span class="line">ObservableMoveTrigger			// 移动</span><br><span class="line">ObservableParticleTrigger		// 粒子：碰撞、触发事件</span><br><span class="line">ObservablePointerClickTrigger	// 点击</span><br><span class="line">ObservablePointerDownTrigger	// 点击按下</span><br><span class="line">ObservablePointerEnterTrigger	// 点击进入</span><br><span class="line">ObservablePointerExitTrigger	// 点击结束</span><br><span class="line">ObservablePointerUpTrigger		// 点击提起</span><br><span class="line">ObservableRectTransformTrigger	// RectTransform：尺寸改变、移除</span><br><span class="line">ObservableScrollTrigger			// 滚动：</span><br><span class="line">ObservableSelectTrigger			// 选中</span><br><span class="line">ObservableStateMachineTrigger		// 状态机：进入、退出；状态：进入、退出、IK、更新</span><br><span class="line">ObservableSubmitTrigger			// 提交</span><br><span class="line">ObservableTransformChangedTrigger		// Transform：变化</span><br><span class="line">ObservableTrigger2DTrigger				// 触发器 2D：进入、停留、退出</span><br><span class="line">ObservableTriggerBase					// Base 类</span><br><span class="line">ObservableTriggerExtensions			// 扩展方法</span><br><span class="line">ObservableTriggerTrigger				// 触发器：进入、停留、退出</span><br><span class="line">ObservableUpdateSelectedTrigger		// 更新选中</span><br><span class="line">ObservableUpdateTrigger					// Update</span><br><span class="line">ObservableVisibleTrigger				// 可见性：可见、不可见</span><br></pre></td></tr></table></figure>
+<h2 id="Observable-生命周期管理"><a href="#Observable-生命周期管理" class="headerlink" title="Observable 生命周期管理"></a>Observable 生命周期管理</h2><p>使用 <code>IDisposable.AddTo()</code> 管理多个 <code>IDisposable</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// CompositeDisposable is similar with List&lt;IDisposable&gt;, manage multiple IDisposable</span><br><span class="line">CompositeDisposable disposables = new CompositeDisposable(); // field</span><br><span class="line"></span><br><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    Observable.EveryUpdate().Subscribe(x =&gt; Debug.Log(x)).AddTo(disposables);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnTriggerEnter(Collider other)</span><br><span class="line">&#123;</span><br><span class="line">    // .Clear() =&gt; Dispose is called for all inner disposables, and the list is cleared.</span><br><span class="line">    // .Dispose() =&gt; Dispose is called for all inner disposables, and Dispose is called immediately after additional Adds.</span><br><span class="line">    disposables.Clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果希望在 <code>GameObject</code> 销毁时，能自动释放订阅，可使用 <code>AddTo(GameObject/Component)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void Start()</span><br><span class="line">&#123;</span><br><span class="line">    Observable.IntervalFrame(30).Subscribe(x =&gt; Debug.Log(x)).AddTo(this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其他可用控制方法：<code>TakeWhile</code>, <code>TakeUntil</code>,<code>TakeUntilDestroy</code> and <code>TakeUntilDisable</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Observable.IntervalFrame(30).TakeUntilDisable(this)</span><br><span class="line">    .Subscribe(x =&gt; Debug.Log(x), () =&gt; Debug.Log(&quot;completed!&quot;));</span><br></pre></td></tr></table></figure>
+<p>小心使用 <code>Repeat</code> 操作符，避免无限循环订阅，可适当使用 <code>RepeatSafe</code>、<code>RepeatUntilDestroy(gameObject/component)</code> 和 <code>RepeatUntilDisable(gameObject/component)</code></p>
+<p>所有类实例都提供了 <code>ObserveEveryValueChanged()</code> 方法，可以在每帧都检查值的变化</p>
+<h2 id="转-Unity-Callbacks-为-IObservables"><a href="#转-Unity-Callbacks-为-IObservables" class="headerlink" title="转 Unity Callbacks 为 IObservables"></a>转 Unity Callbacks 为 IObservables</h2><h2 id="流式日志"><a href="#流式日志" class="headerlink" title="流式日志"></a>流式日志</h2><p><code>UniRx.Diagnostics.Logger</code></p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>需要使用 <code>UniRx.Diagnostics</code></p>
+<h2 id="应用生命周期钩子"><a href="#应用生命周期钩子" class="headerlink" title="应用生命周期钩子"></a>应用生命周期钩子</h2><ul>
+<li><code>Observable.EveryApplicationPause()</code></li>
+<li><code>Observable.EveryApplicationFocus()</code></li>
+<li><code>Observable.OnceApplicationQuit()</code></li>
+</ul>
+<h2 id="基于帧数时间的操作符"><a href="#基于帧数时间的操作符" class="headerlink" title="基于帧数时间的操作符"></a>基于帧数时间的操作符</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">EveryUpdate</span><br><span class="line">EveryFixedUpdate</span><br><span class="line">EveryEndOfFrame</span><br><span class="line">EveryGameObjectUpdate</span><br><span class="line">EveryLateUpdate</span><br><span class="line">ObserveOnMainThread</span><br><span class="line">NextFrame</span><br><span class="line">IntervalFrame</span><br><span class="line">TimerFrame</span><br><span class="line">DelayFrame</span><br><span class="line">SampleFrame</span><br><span class="line">ThrottleFrame</span><br><span class="line">ThrottleFirstFrame</span><br><span class="line">TimeoutFrame</span><br><span class="line">DelayFrameSubscription</span><br><span class="line">FrameInterval</span><br><span class="line">FrameTimeInterval</span><br><span class="line">BatchFrame</span><br></pre></td></tr></table></figure>
+<p><code>Every*</code> 方法的执行顺序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">EveryGameObjectUpdate(in MainThreadDispatcher&apos;s Execution Order) -&gt;</span><br><span class="line">EveryUpdate -&gt; </span><br><span class="line">EveryLateUpdate -&gt; </span><br><span class="line">EveryEndOfFrame</span><br></pre></td></tr></table></figure>
+<h2 id="微协程"><a href="#微协程" class="headerlink" title="微协程"></a>微协程</h2><p>微协程是内存高效、快速的协程 <code>worker</code></p>
+<p>可见另一篇博客的分析：<a href="https://piaoniao.github.io/2018/09/25/unirx-micro-coroutine/" target="_blank" rel="noopener">UniRx —— MicroCoroutine（微协程）</a></p>
+<h2 id="uGUI-集成"><a href="#uGUI-集成" class="headerlink" title="uGUI 集成"></a>uGUI 集成</h2><p>使用 <code>UnityEvent.AsObservable</code> 可以方便地处理 <code>Unity</code> 事件</p>
+<h2 id="响应式属性-amp-响应式集合"><a href="#响应式属性-amp-响应式集合" class="headerlink" title="响应式属性 &amp; 响应式集合"></a>响应式属性 &amp; 响应式集合</h2><h4 id="非序列化-非编辑器可见"><a href="#非序列化-非编辑器可见" class="headerlink" title="非序列化/非编辑器可见"></a>非序列化/非编辑器可见</h4><ul>
+<li><code>ReactiveCollection</code></li>
+<li><code>ReactiveDictionary</code></li>
+<li><code>ReactiveProperty</code></li>
+</ul>
+<h4 id="编辑器可见"><a href="#编辑器可见" class="headerlink" title="编辑器可见"></a>编辑器可见</h4><ul>
+<li><code>IntReactiveProperty</code></li>
+<li><code>LongReactiveProperty</code></li>
+<li><code>ByteReactiveProperty</code></li>
+<li><code>FloatReactiveProperty</code></li>
+<li><code>DoubleReactiveProperty</code></li>
+<li><code>StringReactiveProperty</code></li>
+<li><code>BoolReactiveProperty</code></li>
+<li><code>Vector2ReactiveProperty</code></li>
+<li><code>Vector3ReactiveProperty</code></li>
+<li><code>Vector4ReactiveProperty</code></li>
+<li><code>ColorReactiveProperty</code></li>
+<li><code>RectReactiveProperty</code></li>
+<li><code>AnimationCurveReactiveProperty</code></li>
+<li><code>BoundsReactiveProperty</code></li>
+<li><code>QuaternionReactiveProperty</code></li>
+</ul>
+<h4 id="针对多行和范围的响应式属性"><a href="#针对多行和范围的响应式属性" class="headerlink" title="针对多行和范围的响应式属性"></a>针对多行和范围的响应式属性</h4><p>可用 <code>MultilineReactivePropertyAttribute</code> 和 <code>RangeReactivePropertyAttribute</code> 来替代 <code>Multiline</code> 和 <code>Range</code></p>
+<h4 id="自定义编辑器可见的响应式属性："><a href="#自定义编辑器可见的响应式属性：" class="headerlink" title="自定义编辑器可见的响应式属性："></a>自定义编辑器可见的响应式属性：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public enum Fruit</span><br><span class="line">&#123;</span><br><span class="line">    Apple, Grape</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[Serializable]</span><br><span class="line">public class FruitReactiveProperty : ReactiveProperty&lt;Fruit&gt;</span><br><span class="line">&#123;</span><br><span class="line">    public FruitReactiveProperty()</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public FruitReactiveProperty(Fruit initialValue)</span><br><span class="line">        :base(initialValue)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[UnityEditor.CustomPropertyDrawer(typeof(FruitReactiveProperty))]</span><br><span class="line">[UnityEditor.CustomPropertyDrawer(typeof(YourSpecializedReactiveProperty2))] // and others...</span><br><span class="line">public class ExtendInspectorDisplayDrawer : InspectorDisplayDrawer</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ReadOnlyReactiveProperty"><a href="#ReadOnlyReactiveProperty" class="headerlink" title="ReadOnlyReactiveProperty"></a><code>ReadOnlyReactiveProperty</code></h4><p>如果一个 <code>ReactiveProperty</code> 的值只会通过一个流更新，可使用 <code>ReadOnlyReactiveProperty</code></p>
+<h2 id="Model-View-Reactive-Presenter-模式"><a href="#Model-View-Reactive-Presenter-模式" class="headerlink" title="Model-View-(Reactive)Presenter 模式"></a>Model-View-(Reactive)Presenter 模式</h2><p>暂不研究</p>
+<h2 id="响应式命令-amp-异步响应式命令"><a href="#响应式命令-amp-异步响应式命令" class="headerlink" title="响应式命令 &amp; 异步响应式命令"></a>响应式命令 &amp; 异步响应式命令</h2><p><code>ReactiveCommand</code> 抽象了按钮的 <code>interactable</code> 属性</p>
+<p>（PS：对象命名很难与实际用法联系在一起，先不研究）</p>
+<h2 id="消息代理-amp-异步消息代理"><a href="#消息代理-amp-异步消息代理" class="headerlink" title="消息代理 &amp; 异步消息代理"></a>消息代理 &amp; 异步消息代理</h2><h4 id="MessageBroker："><a href="#MessageBroker：" class="headerlink" title="MessageBroker："></a>MessageBroker：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Subscribe message on global-scope.</span><br><span class="line">MessageBroker.Default.Receive&lt;TestArgs&gt;().Subscribe(x =&gt; Debug.Log(x));</span><br><span class="line"></span><br><span class="line">// Publish message</span><br><span class="line">MessageBroker.Default.Publish(new TestArgs &#123; Value = 1000 &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="AsyncMessageBroker（可以处理异步的-Publish-调用）："><a href="#AsyncMessageBroker（可以处理异步的-Publish-调用）：" class="headerlink" title="AsyncMessageBroker（可以处理异步的 Publish 调用）："></a>AsyncMessageBroker（可以处理异步的 Publish 调用）：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">AsyncMessageBroker.Default.Subscribe&lt;TestArgs&gt;(x =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    // show after 3 seconds.</span><br><span class="line">    return Observable.Timer(TimeSpan.FromSeconds(3)).ForEachAsync(_ =&gt; &#123; Debug.Log(x); &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">AsyncMessageBroker.Default</span><br><span class="line">    .PublishAsync(new TestArgs &#123;Value = 3000&#125;)</span><br><span class="line">    .Subscribe(_ =&gt; Debug.Log(&quot;called all subscriber completed&quot;));</span><br></pre></td></tr></table></figure>
+<h2 id="UniRx-Toolkit"><a href="#UniRx-Toolkit" class="headerlink" title="UniRx.Toolkit"></a>UniRx.Toolkit</h2><p>对象池 <code>ObjectPool</code>、<code>AsyncObjectPool</code></p>
+<h2 id="UniRx-Async"><a href="#UniRx-Async" class="headerlink" title="UniRx.Async"></a>UniRx.Async</h2><p><code>UniRx.Async</code> is the custom <code>async/await</code> support utilities.</p>
+<p>详细学习见：<a href="https://piaoniao.github.io/2018/10/31/unirx-async/" target="_blank" rel="noopener">Unirx——Async</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/piaoniao/2018/10/25/unirx/" data-id="cjpqps781000coug0v105ohuc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/31/unirx-async/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          UniRx——Async
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/11/effective-csharp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Effective C# 读书笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UniRx/">UniRx</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/UniRx/" style="font-size: 10px;">UniRx</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/03/noise/">噪声</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/unirx-async/">UniRx——Async</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/25/unirx/">UniRx 学习 —— 进阶</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/11/effective-csharp/">Effective C# 读书笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/28/csharp-closure-capture/">C# —— Closure Capture（闭包捕获）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 PiaoNiao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
