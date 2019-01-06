@@ -2,6 +2,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
   
 
 
@@ -9,7 +18,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +29,6 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -36,50 +43,60 @@
 
 
 
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
 
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
 
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="UniRx,">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
+  <meta name="description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
 <meta name="keywords" content="UniRx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UniRx 学习——操作符">
@@ -92,7 +109,7 @@
 <meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-1.png">
 <meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-2.png">
 <meta property="og:image" content="http://pf7j6kfg3.bkt.clouddn.com/UniRx-Operator-From-3.png">
-<meta property="og:updated_time" content="2018-11-06T13:58:28.000Z">
+<meta property="og:updated_time" content="2019-01-06T07:23:39.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UniRx 学习——操作符">
 <meta name="twitter:description" content="参考：  Rx 中文文档 UniRx 学习  PS：本文不会将所有的 Rx 操作符都做详细说明，重点在于总结 UniRx 与 Rx 文档 中的不同之处 创建操作Return / Empty / Never / Throw Return：创建一个发射指定值的 Observable，对应 Rx 文档 的 Just  ReturnUnit 相当于 Observable.Return(Unit.Defau">
@@ -100,29 +117,6 @@
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
 
 
 
@@ -130,7 +124,11 @@
 
 
 
-
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
 
   <title>UniRx 学习——操作符 | PiaoNiao's Blog</title>
   
@@ -141,6 +139,35 @@
 
 
 
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
 
@@ -156,7 +183,7 @@
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
+  <div class="site-meta">
     
 
     <div class="custom-logo-site-title">
@@ -166,13 +193,12 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
+    
+    
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -180,35 +206,55 @@
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
       
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
 
       
+      
     </ul>
+  
+
+  
+    
+
   
 
   
@@ -216,12 +262,20 @@
 
 
 
- </div>
+  
+
+
+
+</div>
     </header>
+
+    
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
 
@@ -232,6 +286,8 @@
 
   
   
+  
+
   
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
@@ -256,11 +312,20 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">UniRx 学习——操作符</h1>
+          <h1 class="post-title" itemprop="name headline">UniRx 学习——操作符
+
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -268,13 +333,30 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-24T13:57:33+08:00">
-                2018-09-24
-              </time>
+
+              
+                
+              
+
+              <time title="Created: 2018-09-24 13:57:33" itemprop="dateCreated datePublished" datetime="2018-09-24T13:57:33+08:00">2018-09-24</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-01-06 15:23:39" itemprop="dateModified" datetime="2019-01-06T15:23:39+08:00">2019-01-06</time>
+              
             
           </span>
 
@@ -465,7 +547,7 @@
 <h3 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h3><p>原始 <code>Observable</code> 正常完成或遇到错误都会调起闭包方法</p>
 <h2 id="辅助操作"><a href="#辅助操作" class="headerlink" title="辅助操作"></a>辅助操作</h2><h3 id="Delay"><a href="#Delay" class="headerlink" title="Delay"></a>Delay</h3><p>延迟一段指定的时间再发射来自 <code>Observable</code> 的发射物</p>
 <h4 id="DelaySubscription"><a href="#DelaySubscription" class="headerlink" title="DelaySubscription"></a>DelaySubscription</h4><p>可以延迟订阅原始 <code>Observable</code></p>
-<h4 id="DelayFrame"><a href="#DelayFrame" class="headerlink" title="DelayFrame"></a>DelayFrame</h4><h4 id="DelayFrameSubscription"><a href="#DelayFrameSubscription" class="headerlink" title="DelayFrameSubscription"></a>DelayFrameSubscription</h4><h3 id="Do"><a href="#Do" class="headerlink" title="Do"></a>Do</h3><h4 id="DoOnCancel"><a href="#DoOnCancel" class="headerlink" title="DoOnCancel"></a>DoOnCancel</h4><h4 id="DoOnCompleted"><a href="#DoOnCompleted" class="headerlink" title="DoOnCompleted"></a>DoOnCompleted</h4><h4 id="DoOnError"><a href="#DoOnError" class="headerlink" title="DoOnError"></a>DoOnError</h4><h4 id="DoOnSubscirbe"><a href="#DoOnSubscirbe" class="headerlink" title="DoOnSubscirbe"></a>DoOnSubscirbe</h4><h4 id="DoOnTerminate"><a href="#DoOnTerminate" class="headerlink" title="DoOnTerminate"></a>DoOnTerminate</h4><h3 id="Materialize-Dematerialize"><a href="#Materialize-Dematerialize" class="headerlink" title="Materialize/Dematerialize"></a>Materialize/Dematerialize</h3><p><code>Materialize</code> 将数据项和事件通知都当做数据项发射，<code>Dematerialize</code> 刚好相反</p>
+<h4 id="DelayFrame"><a href="#DelayFrame" class="headerlink" title="DelayFrame"></a>DelayFrame</h4><h4 id="DelayFrameSubscription"><a href="#DelayFrameSubscription" class="headerlink" title="DelayFrameSubscription"></a>DelayFrameSubscription</h4><h3 id="Do"><a href="#Do" class="headerlink" title="Do"></a>Do</h3><h4 id="DoOnCancel"><a href="#DoOnCancel" class="headerlink" title="DoOnCancel"></a>DoOnCancel</h4><h4 id="DoOnCompleted"><a href="#DoOnCompleted" class="headerlink" title="DoOnCompleted"></a>DoOnCompleted</h4><h4 id="DoOnError"><a href="#DoOnError" class="headerlink" title="DoOnError"></a>DoOnError</h4><h4 id="DoOnSubscribe"><a href="#DoOnSubscribe" class="headerlink" title="DoOnSubscribe"></a>DoOnSubscribe</h4><h4 id="DoOnTerminate"><a href="#DoOnTerminate" class="headerlink" title="DoOnTerminate"></a>DoOnTerminate</h4><h3 id="Materialize-Dematerialize"><a href="#Materialize-Dematerialize" class="headerlink" title="Materialize/Dematerialize"></a>Materialize/Dematerialize</h3><p><code>Materialize</code> 将数据项和事件通知都当做数据项发射，<code>Dematerialize</code> 刚好相反</p>
 <p><code>Materialize</code> 将来自原始 <code>Observable</code> 的通知转换为 <code>Notification</code> 对象，然后它返回的 <code>Observable</code> 会发射这些数据</p>
 <h3 id="ObserveOn"><a href="#ObserveOn" class="headerlink" title="ObserveOn"></a>ObserveOn</h3><p>指定一个观察者在哪个调度器上观察这个 <code>Observable</code></p>
 <h4 id="ObserveOnMainThread"><a href="#ObserveOnMainThread" class="headerlink" title="ObserveOnMainThread"></a>ObserveOnMainThread</h4><h3 id="Subscribe"><a href="#Subscribe" class="headerlink" title="Subscribe"></a>Subscribe</h3><p>操作来自 <code>Observable</code> 的发射物和通知</p>
@@ -481,12 +563,18 @@
 
       
     </div>
+
+    
+
     
     
     
 
     
 
+    
+      
+    
     
 
     
@@ -536,17 +624,10 @@
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
           </div>
-          
-
-
           
 
   
@@ -582,7 +663,7 @@
         </ul>
       
 
-      <section class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -590,64 +671,73 @@
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
+          
+            <nav class="site-state motion-element">
               
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">7</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
+                <div class="site-state-item site-state-posts">
                 
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">tags</span>
+                  <a href="/archives/">
                 
-              </div>
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
             
-
-          </nav>
-
           
-
-          
-
-          
-          
-
-          
-          
-
           
 
         </div>
-      </section>
+      </div>
 
       
       <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
           <div class="post-toc">
 
             
-              
+            
+            
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建操作"><span class="nav-number">1.</span> <span class="nav-text">创建操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Return-Empty-Never-Throw"><span class="nav-number">1.1.</span> <span class="nav-text">Return / Empty / Never / Throw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create"><span class="nav-number">1.2.</span> <span class="nav-text">Create</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CreateWithState"><span class="nav-number">1.2.1.</span> <span class="nav-text">CreateWithState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CreateSafe"><span class="nav-number">1.2.2.</span> <span class="nav-text">CreateSafe</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Defer"><span class="nav-number">1.3.</span> <span class="nav-text">Defer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#From"><span class="nav-number">1.4.</span> <span class="nav-text">From</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FromCoroutine-——-从协程创建-Observable"><span class="nav-number">1.4.1.</span> <span class="nav-text">FromCoroutine —— 从协程创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromCoroutineVlaue-——-从协程创建-Observable，并发射返回值"><span class="nav-number">1.4.2.</span> <span class="nav-text">FromCoroutineVlaue —— 从协程创建 Observable，并发射返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromMicroCoroutine-——-从微协程创建-Observable"><span class="nav-number">1.4.3.</span> <span class="nav-text">FromMicroCoroutine —— 从微协程创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromAsyncPattern-——-从异步模式创建-Observable"><span class="nav-number">1.4.4.</span> <span class="nav-text">FromAsyncPattern —— 从异步模式创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromEvent-——-从事件创建-Observable"><span class="nav-number">1.4.5.</span> <span class="nav-text">FromEvent —— 从事件创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromEventPattern-——-从事件模式创建-Observable"><span class="nav-number">1.4.6.</span> <span class="nav-text">FromEventPattern —— 从事件模式创建 Observable</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Start"><span class="nav-number">1.5.</span> <span class="nav-text">Start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interval"><span class="nav-number">1.6.</span> <span class="nav-text">Interval</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IntervalFrame"><span class="nav-number">1.6.1.</span> <span class="nav-text">IntervalFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timer"><span class="nav-number">1.7.</span> <span class="nav-text">Timer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Range"><span class="nav-number">1.8.</span> <span class="nav-text">Range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Repeat"><span class="nav-number">1.9.</span> <span class="nav-text">Repeat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RepeatInfinite"><span class="nav-number">1.9.1.</span> <span class="nav-text">RepeatInfinite</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RepeatSafe"><span class="nav-number">1.9.2.</span> <span class="nav-text">RepeatSafe</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变换操作"><span class="nav-number">2.</span> <span class="nav-text">变换操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Select（对应-Rx-文档的-Map）"><span class="nav-number">2.1.</span> <span class="nav-text">Select（对应 Rx 文档的 Map）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SelectMany（对应-Rx-文档的-FlatMap）"><span class="nav-number">2.2.</span> <span class="nav-text">SelectMany（对应 Rx 文档的 FlatMap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContinueWith"><span class="nav-number">2.3.</span> <span class="nav-text">ContinueWith</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer"><span class="nav-number">2.4.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pairwise"><span class="nav-number">2.5.</span> <span class="nav-text">Pairwise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GroupBy"><span class="nav-number">2.6.</span> <span class="nav-text">GroupBy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cast"><span class="nav-number">2.7.</span> <span class="nav-text">Cast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scan"><span class="nav-number">2.8.</span> <span class="nav-text">Scan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aggregate"><span class="nav-number">2.9.</span> <span class="nav-text">Aggregate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤操作"><span class="nav-number">3.</span> <span class="nav-text">过滤操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Throttle（对应-Rx-文档的-Debounce）"><span class="nav-number">3.1.</span> <span class="nav-text">Throttle（对应 Rx 文档的 Debounce）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFirst"><span class="nav-number">3.1.1.</span> <span class="nav-text">ThrottleFirst</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFrame"><span class="nav-number">3.1.2.</span> <span class="nav-text">ThrottleFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFirstFrame"><span class="nav-number">3.1.3.</span> <span class="nav-text">ThrottleFirstFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distinct"><span class="nav-number">3.2.</span> <span class="nav-text">Distinct</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DistinctUntilChanged"><span class="nav-number">3.2.1.</span> <span class="nav-text">DistinctUntilChanged</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Where（对应-Rx-文档的-Filter）"><span class="nav-number">3.3.</span> <span class="nav-text">Where（对应 Rx 文档的 Filter）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OfType"><span class="nav-number">3.3.1.</span> <span class="nav-text">OfType</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#First"><span class="nav-number">3.4.</span> <span class="nav-text">First</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FirstOrDefault"><span class="nav-number">3.4.1.</span> <span class="nav-text">FirstOrDefault</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Single"><span class="nav-number">3.4.2.</span> <span class="nav-text">Single</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SingleOrDefault"><span class="nav-number">3.4.3.</span> <span class="nav-text">SingleOrDefault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IgnoreElements"><span class="nav-number">3.5.</span> <span class="nav-text">IgnoreElements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Last"><span class="nav-number">3.6.</span> <span class="nav-text">Last</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LastOfDefault"><span class="nav-number">3.6.1.</span> <span class="nav-text">LastOfDefault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample"><span class="nav-number">3.7.</span> <span class="nav-text">Sample</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SampleFrame"><span class="nav-number">3.7.1.</span> <span class="nav-text">SampleFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Skip"><span class="nav-number">3.8.</span> <span class="nav-text">Skip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SkipUntil"><span class="nav-number">3.8.1.</span> <span class="nav-text">SkipUntil</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SkipWhile"><span class="nav-number">3.8.2.</span> <span class="nav-text">SkipWhile</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Take"><span class="nav-number">3.9.</span> <span class="nav-text">Take</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeLast"><span class="nav-number">3.9.1.</span> <span class="nav-text">TakeLast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntil"><span class="nav-number">3.9.2.</span> <span class="nav-text">TakeUntil</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeWhile"><span class="nav-number">3.9.3.</span> <span class="nav-text">TakeWhile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntilDestroy"><span class="nav-number">3.9.4.</span> <span class="nav-text">TakeUntilDestroy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntilDisable"><span class="nav-number">3.9.5.</span> <span class="nav-text">TakeUntilDisable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合操作"><span class="nav-number">4.</span> <span class="nav-text">结合操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CombineLatest"><span class="nav-number">4.1.</span> <span class="nav-text">CombineLatest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WithLatestFrom"><span class="nav-number">4.2.</span> <span class="nav-text">WithLatestFrom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WhenAll"><span class="nav-number">4.3.</span> <span class="nav-text">WhenAll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge"><span class="nav-number">4.4.</span> <span class="nav-text">Merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concat"><span class="nav-number">4.5.</span> <span class="nav-text">Concat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StartWith"><span class="nav-number">4.6.</span> <span class="nav-text">StartWith</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Switch"><span class="nav-number">4.7.</span> <span class="nav-text">Switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zip"><span class="nav-number">4.8.</span> <span class="nav-text">Zip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZipLatest"><span class="nav-number">4.8.1.</span> <span class="nav-text">ZipLatest</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">5.</span> <span class="nav-text">错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Catch"><span class="nav-number">5.1.</span> <span class="nav-text">Catch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CatchIgnore"><span class="nav-number">5.1.1.</span> <span class="nav-text">CatchIgnore</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retry"><span class="nav-number">5.2.</span> <span class="nav-text">Retry</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OnErrorRetry"><span class="nav-number">5.2.1.</span> <span class="nav-text">OnErrorRetry</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Finally"><span class="nav-number">5.3.</span> <span class="nav-text">Finally</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助操作"><span class="nav-number">6.</span> <span class="nav-text">辅助操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Delay"><span class="nav-number">6.1.</span> <span class="nav-text">Delay</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DelaySubscription"><span class="nav-number">6.1.1.</span> <span class="nav-text">DelaySubscription</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DelayFrame"><span class="nav-number">6.1.2.</span> <span class="nav-text">DelayFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DelayFrameSubscription"><span class="nav-number">6.1.3.</span> <span class="nav-text">DelayFrameSubscription</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Do"><span class="nav-number">6.2.</span> <span class="nav-text">Do</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnCancel"><span class="nav-number">6.2.1.</span> <span class="nav-text">DoOnCancel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnCompleted"><span class="nav-number">6.2.2.</span> <span class="nav-text">DoOnCompleted</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnError"><span class="nav-number">6.2.3.</span> <span class="nav-text">DoOnError</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnSubscirbe"><span class="nav-number">6.2.4.</span> <span class="nav-text">DoOnSubscirbe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnTerminate"><span class="nav-number">6.2.5.</span> <span class="nav-text">DoOnTerminate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Materialize-Dematerialize"><span class="nav-number">6.3.</span> <span class="nav-text">Materialize/Dematerialize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ObserveOn"><span class="nav-number">6.4.</span> <span class="nav-text">ObserveOn</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ObserveOnMainThread"><span class="nav-number">6.4.1.</span> <span class="nav-text">ObserveOnMainThread</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subscribe"><span class="nav-number">6.5.</span> <span class="nav-text">Subscribe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SubscribeOn"><span class="nav-number">6.6.</span> <span class="nav-text">SubscribeOn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TimeInterval"><span class="nav-number">6.7.</span> <span class="nav-text">TimeInterval</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FrameTimeInterval"><span class="nav-number">6.7.1.</span> <span class="nav-text">FrameTimeInterval</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timeout"><span class="nav-number">6.8.</span> <span class="nav-text">Timeout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TimeoutFrame"><span class="nav-number">6.8.1.</span> <span class="nav-text">TimeoutFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timestamp"><span class="nav-number">6.9.</span> <span class="nav-text">Timestamp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#To"><span class="nav-number">6.10.</span> <span class="nav-text">To</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ToArray"><span class="nav-number">6.10.1.</span> <span class="nav-text">ToArray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToList"><span class="nav-number">6.10.2.</span> <span class="nav-text">ToList</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToAwaitableEnumerator"><span class="nav-number">6.10.3.</span> <span class="nav-text">ToAwaitableEnumerator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToYieldInstruction"><span class="nav-number">6.10.4.</span> <span class="nav-text">ToYieldInstruction</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件和布尔操作"><span class="nav-number">7.</span> <span class="nav-text">条件和布尔操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Amb"><span class="nav-number">7.1.</span> <span class="nav-text">Amb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DefaultIfEmpty"><span class="nav-number">7.2.</span> <span class="nav-text">DefaultIfEmpty</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建操作"><span class="nav-number">1.</span> <span class="nav-text">创建操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Return-Empty-Never-Throw"><span class="nav-number">1.1.</span> <span class="nav-text">Return / Empty / Never / Throw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create"><span class="nav-number">1.2.</span> <span class="nav-text">Create</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CreateWithState"><span class="nav-number">1.2.1.</span> <span class="nav-text">CreateWithState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CreateSafe"><span class="nav-number">1.2.2.</span> <span class="nav-text">CreateSafe</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Defer"><span class="nav-number">1.3.</span> <span class="nav-text">Defer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#From"><span class="nav-number">1.4.</span> <span class="nav-text">From</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FromCoroutine-——-从协程创建-Observable"><span class="nav-number">1.4.1.</span> <span class="nav-text">FromCoroutine —— 从协程创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromCoroutineVlaue-——-从协程创建-Observable，并发射返回值"><span class="nav-number">1.4.2.</span> <span class="nav-text">FromCoroutineVlaue —— 从协程创建 Observable，并发射返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromMicroCoroutine-——-从微协程创建-Observable"><span class="nav-number">1.4.3.</span> <span class="nav-text">FromMicroCoroutine —— 从微协程创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromAsyncPattern-——-从异步模式创建-Observable"><span class="nav-number">1.4.4.</span> <span class="nav-text">FromAsyncPattern —— 从异步模式创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromEvent-——-从事件创建-Observable"><span class="nav-number">1.4.5.</span> <span class="nav-text">FromEvent —— 从事件创建 Observable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FromEventPattern-——-从事件模式创建-Observable"><span class="nav-number">1.4.6.</span> <span class="nav-text">FromEventPattern —— 从事件模式创建 Observable</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Start"><span class="nav-number">1.5.</span> <span class="nav-text">Start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interval"><span class="nav-number">1.6.</span> <span class="nav-text">Interval</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IntervalFrame"><span class="nav-number">1.6.1.</span> <span class="nav-text">IntervalFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timer"><span class="nav-number">1.7.</span> <span class="nav-text">Timer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Range"><span class="nav-number">1.8.</span> <span class="nav-text">Range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Repeat"><span class="nav-number">1.9.</span> <span class="nav-text">Repeat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RepeatInfinite"><span class="nav-number">1.9.1.</span> <span class="nav-text">RepeatInfinite</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RepeatSafe"><span class="nav-number">1.9.2.</span> <span class="nav-text">RepeatSafe</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变换操作"><span class="nav-number">2.</span> <span class="nav-text">变换操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Select（对应-Rx-文档的-Map）"><span class="nav-number">2.1.</span> <span class="nav-text">Select（对应 Rx 文档的 Map）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SelectMany（对应-Rx-文档的-FlatMap）"><span class="nav-number">2.2.</span> <span class="nav-text">SelectMany（对应 Rx 文档的 FlatMap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContinueWith"><span class="nav-number">2.3.</span> <span class="nav-text">ContinueWith</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer"><span class="nav-number">2.4.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pairwise"><span class="nav-number">2.5.</span> <span class="nav-text">Pairwise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GroupBy"><span class="nav-number">2.6.</span> <span class="nav-text">GroupBy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cast"><span class="nav-number">2.7.</span> <span class="nav-text">Cast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scan"><span class="nav-number">2.8.</span> <span class="nav-text">Scan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aggregate"><span class="nav-number">2.9.</span> <span class="nav-text">Aggregate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤操作"><span class="nav-number">3.</span> <span class="nav-text">过滤操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Throttle（对应-Rx-文档的-Debounce）"><span class="nav-number">3.1.</span> <span class="nav-text">Throttle（对应 Rx 文档的 Debounce）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFirst"><span class="nav-number">3.1.1.</span> <span class="nav-text">ThrottleFirst</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFrame"><span class="nav-number">3.1.2.</span> <span class="nav-text">ThrottleFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThrottleFirstFrame"><span class="nav-number">3.1.3.</span> <span class="nav-text">ThrottleFirstFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distinct"><span class="nav-number">3.2.</span> <span class="nav-text">Distinct</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DistinctUntilChanged"><span class="nav-number">3.2.1.</span> <span class="nav-text">DistinctUntilChanged</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Where（对应-Rx-文档的-Filter）"><span class="nav-number">3.3.</span> <span class="nav-text">Where（对应 Rx 文档的 Filter）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OfType"><span class="nav-number">3.3.1.</span> <span class="nav-text">OfType</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#First"><span class="nav-number">3.4.</span> <span class="nav-text">First</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FirstOrDefault"><span class="nav-number">3.4.1.</span> <span class="nav-text">FirstOrDefault</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Single"><span class="nav-number">3.4.2.</span> <span class="nav-text">Single</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SingleOrDefault"><span class="nav-number">3.4.3.</span> <span class="nav-text">SingleOrDefault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IgnoreElements"><span class="nav-number">3.5.</span> <span class="nav-text">IgnoreElements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Last"><span class="nav-number">3.6.</span> <span class="nav-text">Last</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LastOfDefault"><span class="nav-number">3.6.1.</span> <span class="nav-text">LastOfDefault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample"><span class="nav-number">3.7.</span> <span class="nav-text">Sample</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SampleFrame"><span class="nav-number">3.7.1.</span> <span class="nav-text">SampleFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Skip"><span class="nav-number">3.8.</span> <span class="nav-text">Skip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SkipUntil"><span class="nav-number">3.8.1.</span> <span class="nav-text">SkipUntil</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SkipWhile"><span class="nav-number">3.8.2.</span> <span class="nav-text">SkipWhile</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Take"><span class="nav-number">3.9.</span> <span class="nav-text">Take</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeLast"><span class="nav-number">3.9.1.</span> <span class="nav-text">TakeLast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntil"><span class="nav-number">3.9.2.</span> <span class="nav-text">TakeUntil</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeWhile"><span class="nav-number">3.9.3.</span> <span class="nav-text">TakeWhile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntilDestroy"><span class="nav-number">3.9.4.</span> <span class="nav-text">TakeUntilDestroy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TakeUntilDisable"><span class="nav-number">3.9.5.</span> <span class="nav-text">TakeUntilDisable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合操作"><span class="nav-number">4.</span> <span class="nav-text">结合操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CombineLatest"><span class="nav-number">4.1.</span> <span class="nav-text">CombineLatest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WithLatestFrom"><span class="nav-number">4.2.</span> <span class="nav-text">WithLatestFrom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WhenAll"><span class="nav-number">4.3.</span> <span class="nav-text">WhenAll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge"><span class="nav-number">4.4.</span> <span class="nav-text">Merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concat"><span class="nav-number">4.5.</span> <span class="nav-text">Concat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StartWith"><span class="nav-number">4.6.</span> <span class="nav-text">StartWith</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Switch"><span class="nav-number">4.7.</span> <span class="nav-text">Switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zip"><span class="nav-number">4.8.</span> <span class="nav-text">Zip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZipLatest"><span class="nav-number">4.8.1.</span> <span class="nav-text">ZipLatest</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">5.</span> <span class="nav-text">错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Catch"><span class="nav-number">5.1.</span> <span class="nav-text">Catch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CatchIgnore"><span class="nav-number">5.1.1.</span> <span class="nav-text">CatchIgnore</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retry"><span class="nav-number">5.2.</span> <span class="nav-text">Retry</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OnErrorRetry"><span class="nav-number">5.2.1.</span> <span class="nav-text">OnErrorRetry</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Finally"><span class="nav-number">5.3.</span> <span class="nav-text">Finally</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助操作"><span class="nav-number">6.</span> <span class="nav-text">辅助操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Delay"><span class="nav-number">6.1.</span> <span class="nav-text">Delay</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DelaySubscription"><span class="nav-number">6.1.1.</span> <span class="nav-text">DelaySubscription</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DelayFrame"><span class="nav-number">6.1.2.</span> <span class="nav-text">DelayFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DelayFrameSubscription"><span class="nav-number">6.1.3.</span> <span class="nav-text">DelayFrameSubscription</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Do"><span class="nav-number">6.2.</span> <span class="nav-text">Do</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnCancel"><span class="nav-number">6.2.1.</span> <span class="nav-text">DoOnCancel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnCompleted"><span class="nav-number">6.2.2.</span> <span class="nav-text">DoOnCompleted</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnError"><span class="nav-number">6.2.3.</span> <span class="nav-text">DoOnError</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnSubscribe"><span class="nav-number">6.2.4.</span> <span class="nav-text">DoOnSubscribe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoOnTerminate"><span class="nav-number">6.2.5.</span> <span class="nav-text">DoOnTerminate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Materialize-Dematerialize"><span class="nav-number">6.3.</span> <span class="nav-text">Materialize/Dematerialize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ObserveOn"><span class="nav-number">6.4.</span> <span class="nav-text">ObserveOn</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ObserveOnMainThread"><span class="nav-number">6.4.1.</span> <span class="nav-text">ObserveOnMainThread</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subscribe"><span class="nav-number">6.5.</span> <span class="nav-text">Subscribe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SubscribeOn"><span class="nav-number">6.6.</span> <span class="nav-text">SubscribeOn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TimeInterval"><span class="nav-number">6.7.</span> <span class="nav-text">TimeInterval</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FrameTimeInterval"><span class="nav-number">6.7.1.</span> <span class="nav-text">FrameTimeInterval</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timeout"><span class="nav-number">6.8.</span> <span class="nav-text">Timeout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TimeoutFrame"><span class="nav-number">6.8.1.</span> <span class="nav-text">TimeoutFrame</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timestamp"><span class="nav-number">6.9.</span> <span class="nav-text">Timestamp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#To"><span class="nav-number">6.10.</span> <span class="nav-text">To</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ToArray"><span class="nav-number">6.10.1.</span> <span class="nav-text">ToArray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToList"><span class="nav-number">6.10.2.</span> <span class="nav-text">ToList</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToAwaitableEnumerator"><span class="nav-number">6.10.3.</span> <span class="nav-text">ToAwaitableEnumerator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ToYieldInstruction"><span class="nav-number">6.10.4.</span> <span class="nav-text">ToYieldInstruction</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件和布尔操作"><span class="nav-number">7.</span> <span class="nav-text">条件和布尔操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Amb"><span class="nav-number">7.1.</span> <span class="nav-text">Amb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DefaultIfEmpty"><span class="nav-number">7.2.</span> <span class="nav-text">DefaultIfEmpty</span></a></li></ol></li></ol></div>
             
 
           </div>
-        </section>
+        </div>
       <!--/noindex-->
       
 
@@ -664,16 +754,18 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
+  <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">PiaoNiao</span>
 
   
+
+  
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
@@ -681,12 +773,13 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
 
 
 
 
         
+
 
 
 
@@ -707,11 +800,14 @@
 
     
 
+    
+
+    
   </div>
 
   
 
-<script type="text/javascript">
+<script>
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -725,7 +821,6 @@
 
 
 
-  
 
 
 
@@ -738,43 +833,27 @@
 
 
 
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
+
+
+
+
 
   
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+  <script src="/js/src/utils.js?v=6.7.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+  <script src="/js/src/motion.js?v=6.7.0"></script>
 
 
 
@@ -782,49 +861,20 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
 
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
 
 
 
   
-
-
   
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
 
 
   
@@ -840,6 +890,17 @@
   
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
   
 
   
