@@ -285,6 +285,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/piaoniao/2019/05/06/cellular-automata/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PiaoNiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PiaoNiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/06/cellular-automata/" class="post-title-link" itemprop="url">元胞自动机</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-06 21:26:37" itemprop="dateCreated datePublished" datetime="2019-05-06T21:26:37+08:00">2019-05-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-12 20:02:09" itemprop="dateModified" datetime="2019-05-12T20:02:09+08:00">2019-05-12</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p> 我是通过<code>生命游戏</code>这个词，进而了解到<code>元胞自动机</code>的，先看<code>生命游戏</code> 这个听起来很”有趣”的游戏到底是怎么玩的：</p>
+<h3 id="生命游戏"><a href="#生命游戏" class="headerlink" title="生命游戏"></a>生命游戏</h3><p>注：本文讨论的生命游戏是指 <a href="https://zh.wikipedia.org/wiki/%E5%BA%B7%E5%A8%81%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F" target="_blank" rel="noopener">康威生命游戏（Conway’s Game of Life）</a></p>
+<h5 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h5><ul>
+<li>二维空间上的一个网格（正方形）代表一个<code>元胞</code></li>
+<li><code>元胞</code>具有两种状态：”死亡”、”存活”</li>
+<li><code>元胞</code>周围的 8 个网格称为元胞的<code>邻居</code></li>
+</ul>
+<h5 id="规则："><a href="#规则：" class="headerlink" title="规则："></a>规则：</h5><ul>
+<li>当前元胞为”存活”，当存活的邻居个数小于 2 时，该元胞死亡（模拟生命数量稀少）</li>
+<li>当前元胞为”存活”，当存活的邻居个数为 2 或 3 时，该元胞保持存活</li>
+<li>当前元胞为”存活”，当存活的邻居个数大于 3 时，该元胞死亡（模拟生命数量过多）</li>
+<li>当前元胞为”死亡”，当存活的邻居个数等于 3 时，该元胞状态转成存活（模拟生命繁殖）</li>
+</ul>
+<h5 id="开始游戏："><a href="#开始游戏：" class="headerlink" title="开始游戏："></a>开始游戏：</h5><p>在一定范围的二维空间中，创建一定量的初始元胞，然后根据游戏规则，迭代该范围中元胞的状态变化</p>
+<h5 id="游戏欣赏："><a href="#游戏欣赏：" class="headerlink" title="游戏欣赏："></a>游戏欣赏：</h5><p>（域名没有备案……所以没图）</p>
+<h5 id="程序实现（伪代码）："><a href="#程序实现（伪代码）：" class="headerlink" title="程序实现（伪代码）："></a>程序实现（伪代码）：</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cells; <span class="comment">// 空间中元胞二维数组（已包含初始元胞的）</span></span><br><span class="line">newCells; <span class="comment">// 暂存每次时间迭代产生的新元胞</span></span><br><span class="line">Timer.interval(<span class="number">1000</span>)&#123; <span class="comment">// 时间迭代</span></span><br><span class="line">   <span class="comment">// 空间中的元胞迭代</span></span><br><span class="line">   <span class="keyword">for</span>(x=<span class="number">0</span>;x&lt;width;x++)&#123;</span><br><span class="line">     <span class="keyword">for</span>(y=<span class="number">0</span>;x&lt;height;y++)&#123;</span><br><span class="line">       neighborsCount = countNeighbors(cells,width,height,x,y); <span class="comment">// 计算邻居数</span></span><br><span class="line">       <span class="comment">// PS：这里有个疑问：</span></span><br><span class="line">       <span class="comment">// 是在迭代的同时就改变当前元胞状态，即该元胞状态改变并对后续迭代产生影响，如下：</span></span><br><span class="line">       <span class="comment">// cells[x][y] = updateCellStatus(cells[x][y],neighborsCount);</span></span><br><span class="line">       <span class="comment">// 还是将元胞的新状态用新的二维数组存起来？？？</span></span><br><span class="line">       <span class="comment">// 个人觉得这里应该后者比较符合，但模拟其它问题就不一定：</span></span><br><span class="line">       newCells[x][y] = updateCellStatus(cells[x][y],neighborsCount); <span class="comment">// 更新元胞状态</span></span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// 更新界面</span></span><br><span class="line">   updateViews(newCells);</span><br><span class="line">   <span class="comment">// 交换引用，准备迭代下一个时刻</span></span><br><span class="line">   temp = newCells;</span><br><span class="line">   newCells = cells;</span><br><span class="line">   cells = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="元胞自动机（cellular-automata，CA）"><a href="#元胞自动机（cellular-automata，CA）" class="headerlink" title="元胞自动机（cellular automata，CA）"></a>元胞自动机（cellular automata，CA）</h3><p>先简单看一下百科的解析（后面几段就不复制粘贴了）：</p>
+<h6 id="元胞自动机-是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。"><a href="#元胞自动机-是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。" class="headerlink" title="元胞自动机 是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。"></a><code>元胞自动机</code> 是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。</h6><p>还是很懵……</p>
+<p>再结合 <code>生命游戏</code> 来理解：</p>
+<p><code>生命游戏</code> 可以说是简单模拟了一个种群内部生命的演化（网上也有很多文章讨论——根据初始元胞设定的不同而产生的各种”神奇”演进图案，但不是本文的重点），我们也可以称其为一种模拟生命演化的模型。其次，我们完全可以通过修改或说变化 <code>生命游戏</code> 的一些定义、规则、应用场景等，做出另一个东西的演化模型。如：</p>
+<ul>
+<li><code>生命游戏</code> 中定义的空间网格，其实重点就是平铺一个空间的想法，我们完全可以用平铺的等边三角形、菱形、等边六边型，甚至一维问题的线段、三维问题的正四、八面体等来替换</li>
+<li><code>生命游戏</code> 中网格代表元胞，我们也可以把线段、晶格等代表其它东西，如：一维的方格中每个方格代表路况，来模拟交通情况</li>
+<li><code>生命游戏</code> 中元胞有”存活”和”死亡”状态，而用一维的方格模拟交通状况时，每个”路况”方格也有”有车”和”没车”的状态，这类模型的状态通常都只考虑有限个的</li>
+<li><code>生命游戏</code> 中以统计周围邻居数来模拟种群生命的演化，而路况问题可根据前面和后面”路况”有没有车来更新当前的”路况”状态，关键是根据实际模拟的问题设定单元的状态更新规则，当然这个规则要覆盖所模拟的单元的状态</li>
+</ul>
+<h6 id="元胞自动机-则是这一类模型的总称，总结几个描述性的特点："><a href="#元胞自动机-则是这一类模型的总称，总结几个描述性的特点：" class="headerlink" title="元胞自动机 则是这一类模型的总称，总结几个描述性的特点："></a><code>元胞自动机</code> 则是这一类模型的总称，总结几个描述性的特点：</h6><ul>
+<li>时间迭代，模拟问题的演化</li>
+<li>空间中的单元存在有限个状态</li>
+<li>单元的状态会受到空间内局部区域的其它单元的影响 </li>
+</ul>
+<h5 id="元胞自动机的应用"><a href="#元胞自动机的应用" class="headerlink" title="元胞自动机的应用"></a>元胞自动机的应用</h5><p>了解元胞自动机的概念之后，关键还是遇到类似上述特点的问题时，能不能想到用元胞自动机来解决，或是用元胞自动机来模拟一些有趣的东西或者玩法。网上也有很多，我就不找了，我自己倒是想了 2 个觉得比较有意思：</p>
+<ul>
+<li>用元胞自动机能不能解答数独问题，重点是格子的数字更新规则，我想如果遇到冲突便随机一个尽量不冲突的，再加一些标记等，这样做能不能做到一定有解</li>
+<li>玩游戏时，经常主角队都有几个伙伴要安排站位，这样可以利用元胞自动机与五行相生相克来设计对战时阵法变化，规则就是根据角色的出招、对方的阵法等来更新站位的元素</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/piaoniao/2019/03/30/dart-analysis-options/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2042,7 +2231,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2063,7 +2252,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

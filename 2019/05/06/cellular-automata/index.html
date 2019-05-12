@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="我是通过生命游戏这个词，进而了解到元胞自动机的，先看生命游戏 这个听起来很”有趣”的游戏到底是怎么玩的： 生命游戏注：本文讨论的生命游戏是指 康威生命游戏（Conway’s Game of Life） 定义： 二维空间上的一个网格（正方形）代表一个元胞 元胞具有两种状态：”死亡”、”存活” 元胞周围的 8 个网格称为元胞的邻居  规则： 当前元胞为”存活”，当存活的邻居个数小于 2 时，该元胞死">
+<meta name="keywords" content="模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="元胞自动机">
+<meta property="og:url" content="https://github.com/piaoniao/2019/05/06/cellular-automata/index.html">
+<meta property="og:site_name" content="PiaoNiao&#39;s Blog">
+<meta property="og:description" content="我是通过生命游戏这个词，进而了解到元胞自动机的，先看生命游戏 这个听起来很”有趣”的游戏到底是怎么玩的： 生命游戏注：本文讨论的生命游戏是指 康威生命游戏（Conway’s Game of Life） 定义： 二维空间上的一个网格（正方形）代表一个元胞 元胞具有两种状态：”死亡”、”存活” 元胞周围的 8 个网格称为元胞的邻居  规则： 当前元胞为”存活”，当存活的邻居个数小于 2 时，该元胞死">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-12T12:02:09.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="元胞自动机">
+<meta name="twitter:description" content="我是通过生命游戏这个词，进而了解到元胞自动机的，先看生命游戏 这个听起来很”有趣”的游戏到底是怎么玩的： 生命游戏注：本文讨论的生命游戏是指 康威生命游戏（Conway’s Game of Life） 定义： 二维空间上的一个网格（正方形）代表一个元胞 元胞具有两种状态：”死亡”、”存活” 元胞周围的 8 个网格称为元胞的邻居  规则： 当前元胞为”存活”，当存活的邻居个数小于 2 时，该元胞死">
+
+
+
+
+
+
+  <link rel="canonical" href="https://github.com/piaoniao/2019/05/06/cellular-automata/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>元胞自动机 | PiaoNiao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PiaoNiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/piaoniao/2019/05/06/cellular-automata/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PiaoNiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PiaoNiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">元胞自动机
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-06 21:26:37" itemprop="dateCreated datePublished" datetime="2019-05-06T21:26:37+08:00">2019-05-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-12 20:02:09" itemprop="dateModified" datetime="2019-05-12T20:02:09+08:00">2019-05-12</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 我是通过<code>生命游戏</code>这个词，进而了解到<code>元胞自动机</code>的，先看<code>生命游戏</code> 这个听起来很”有趣”的游戏到底是怎么玩的：</p>
+<h3 id="生命游戏"><a href="#生命游戏" class="headerlink" title="生命游戏"></a>生命游戏</h3><p>注：本文讨论的生命游戏是指 <a href="https://zh.wikipedia.org/wiki/%E5%BA%B7%E5%A8%81%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F" target="_blank" rel="noopener">康威生命游戏（Conway’s Game of Life）</a></p>
+<h5 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h5><ul>
+<li>二维空间上的一个网格（正方形）代表一个<code>元胞</code></li>
+<li><code>元胞</code>具有两种状态：”死亡”、”存活”</li>
+<li><code>元胞</code>周围的 8 个网格称为元胞的<code>邻居</code></li>
+</ul>
+<h5 id="规则："><a href="#规则：" class="headerlink" title="规则："></a>规则：</h5><ul>
+<li>当前元胞为”存活”，当存活的邻居个数小于 2 时，该元胞死亡（模拟生命数量稀少）</li>
+<li>当前元胞为”存活”，当存活的邻居个数为 2 或 3 时，该元胞保持存活</li>
+<li>当前元胞为”存活”，当存活的邻居个数大于 3 时，该元胞死亡（模拟生命数量过多）</li>
+<li>当前元胞为”死亡”，当存活的邻居个数等于 3 时，该元胞状态转成存活（模拟生命繁殖）</li>
+</ul>
+<h5 id="开始游戏："><a href="#开始游戏：" class="headerlink" title="开始游戏："></a>开始游戏：</h5><p>在一定范围的二维空间中，创建一定量的初始元胞，然后根据游戏规则，迭代该范围中元胞的状态变化</p>
+<h5 id="游戏欣赏："><a href="#游戏欣赏：" class="headerlink" title="游戏欣赏："></a>游戏欣赏：</h5><p>（域名没有备案……所以没图）</p>
+<h5 id="程序实现（伪代码）："><a href="#程序实现（伪代码）：" class="headerlink" title="程序实现（伪代码）："></a>程序实现（伪代码）：</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cells; <span class="comment">// 空间中元胞二维数组（已包含初始元胞的）</span></span><br><span class="line">newCells; <span class="comment">// 暂存每次时间迭代产生的新元胞</span></span><br><span class="line">Timer.interval(<span class="number">1000</span>)&#123; <span class="comment">// 时间迭代</span></span><br><span class="line">   <span class="comment">// 空间中的元胞迭代</span></span><br><span class="line">   <span class="keyword">for</span>(x=<span class="number">0</span>;x&lt;width;x++)&#123;</span><br><span class="line">     <span class="keyword">for</span>(y=<span class="number">0</span>;x&lt;height;y++)&#123;</span><br><span class="line">       neighborsCount = countNeighbors(cells,width,height,x,y); <span class="comment">// 计算邻居数</span></span><br><span class="line">       <span class="comment">// PS：这里有个疑问：</span></span><br><span class="line">       <span class="comment">// 是在迭代的同时就改变当前元胞状态，即该元胞状态改变并对后续迭代产生影响，如下：</span></span><br><span class="line">       <span class="comment">// cells[x][y] = updateCellStatus(cells[x][y],neighborsCount);</span></span><br><span class="line">       <span class="comment">// 还是将元胞的新状态用新的二维数组存起来？？？</span></span><br><span class="line">       <span class="comment">// 个人觉得这里应该后者比较符合，但模拟其它问题就不一定：</span></span><br><span class="line">       newCells[x][y] = updateCellStatus(cells[x][y],neighborsCount); <span class="comment">// 更新元胞状态</span></span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// 更新界面</span></span><br><span class="line">   updateViews(newCells);</span><br><span class="line">   <span class="comment">// 交换引用，准备迭代下一个时刻</span></span><br><span class="line">   temp = newCells;</span><br><span class="line">   newCells = cells;</span><br><span class="line">   cells = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="元胞自动机（cellular-automata，CA）"><a href="#元胞自动机（cellular-automata，CA）" class="headerlink" title="元胞自动机（cellular automata，CA）"></a>元胞自动机（cellular automata，CA）</h3><p>先简单看一下百科的解析（后面几段就不复制粘贴了）：</p>
+<h6 id="元胞自动机-是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。"><a href="#元胞自动机-是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。" class="headerlink" title="元胞自动机 是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。"></a><code>元胞自动机</code> 是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。</h6><p>还是很懵……</p>
+<p>再结合 <code>生命游戏</code> 来理解：</p>
+<p><code>生命游戏</code> 可以说是简单模拟了一个种群内部生命的演化（网上也有很多文章讨论——根据初始元胞设定的不同而产生的各种”神奇”演进图案，但不是本文的重点），我们也可以称其为一种模拟生命演化的模型。其次，我们完全可以通过修改或说变化 <code>生命游戏</code> 的一些定义、规则、应用场景等，做出另一个东西的演化模型。如：</p>
+<ul>
+<li><code>生命游戏</code> 中定义的空间网格，其实重点就是平铺一个空间的想法，我们完全可以用平铺的等边三角形、菱形、等边六边型，甚至一维问题的线段、三维问题的正四、八面体等来替换</li>
+<li><code>生命游戏</code> 中网格代表元胞，我们也可以把线段、晶格等代表其它东西，如：一维的方格中每个方格代表路况，来模拟交通情况</li>
+<li><code>生命游戏</code> 中元胞有”存活”和”死亡”状态，而用一维的方格模拟交通状况时，每个”路况”方格也有”有车”和”没车”的状态，这类模型的状态通常都只考虑有限个的</li>
+<li><code>生命游戏</code> 中以统计周围邻居数来模拟种群生命的演化，而路况问题可根据前面和后面”路况”有没有车来更新当前的”路况”状态，关键是根据实际模拟的问题设定单元的状态更新规则，当然这个规则要覆盖所模拟的单元的状态</li>
+</ul>
+<h6 id="元胞自动机-则是这一类模型的总称，总结几个描述性的特点："><a href="#元胞自动机-则是这一类模型的总称，总结几个描述性的特点：" class="headerlink" title="元胞自动机 则是这一类模型的总称，总结几个描述性的特点："></a><code>元胞自动机</code> 则是这一类模型的总称，总结几个描述性的特点：</h6><ul>
+<li>时间迭代，模拟问题的演化</li>
+<li>空间中的单元存在有限个状态</li>
+<li>单元的状态会受到空间内局部区域的其它单元的影响 </li>
+</ul>
+<h5 id="元胞自动机的应用"><a href="#元胞自动机的应用" class="headerlink" title="元胞自动机的应用"></a>元胞自动机的应用</h5><p>了解元胞自动机的概念之后，关键还是遇到类似上述特点的问题时，能不能想到用元胞自动机来解决，或是用元胞自动机来模拟一些有趣的东西或者玩法。网上也有很多，我就不找了，我自己倒是想了 2 个觉得比较有意思：</p>
+<ul>
+<li>用元胞自动机能不能解答数独问题，重点是格子的数字更新规则，我想如果遇到冲突便随机一个尽量不冲突的，再加一些标记等，这样做能不能做到一定有解</li>
+<li>玩游戏时，经常主角队都有几个伙伴要安排站位，这样可以利用元胞自动机与五行相生相克来设计对战时阵法变化，规则就是根据角色的出招、对方的阵法等来更新站位的元素</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模型/" rel="tag"># 模型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/30/dart-analysis-options/" rel="next" title="dart-analysis-options">
+                <i class="fa fa-chevron-left"></i> dart-analysis-options
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">PiaoNiao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#生命游戏"><span class="nav-number">1.</span> <span class="nav-text">生命游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义："><span class="nav-number">1.0.1.</span> <span class="nav-text">定义：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#规则："><span class="nav-number">1.0.2.</span> <span class="nav-text">规则：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开始游戏："><span class="nav-number">1.0.3.</span> <span class="nav-text">开始游戏：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#游戏欣赏："><span class="nav-number">1.0.4.</span> <span class="nav-text">游戏欣赏：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#程序实现（伪代码）："><span class="nav-number">1.0.5.</span> <span class="nav-text">程序实现（伪代码）：</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#元胞自动机（cellular-automata，CA）"><span class="nav-number">2.</span> <span class="nav-text">元胞自动机（cellular automata，CA）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#元胞自动机-是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">元胞自动机 是一种时间、空间、状态都离散，空间相互作用和时间因果关系为局部的网格动力学模型，具有模拟复杂系统时空演化过程的能力。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#元胞自动机-则是这一类模型的总称，总结几个描述性的特点："><span class="nav-number">2.0.0.2.</span> <span class="nav-text">元胞自动机 则是这一类模型的总称，总结几个描述性的特点：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#元胞自动机的应用"><span class="nav-number">2.0.1.</span> <span class="nav-text">元胞自动机的应用</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PiaoNiao</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
