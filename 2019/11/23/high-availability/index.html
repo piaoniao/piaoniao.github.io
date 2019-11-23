@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="什么是高可用先逛一逛百科和博客……  高可用通常是指，通过设计减少系统不能提供服务的时间。 高可用通常来描述一个系统经过专门的设计，从而减少停工时间，而保持其服务的高度可用性。 高可用指系统无中断地执行其功能的能力，代表系統的可用性程度。  定义什么的就这样吧…… 核心准则看到一篇文章的作者总结得很好（究竟啥才是互联网架构“高可用”）： 保证系统高可用，架构设计的核心准则是：冗余 想想其实也挺好理">
+<meta name="keywords" content="高可用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高可用">
+<meta property="og:url" content="https://github.com/piaoniao/2019/11/23/high-availability/index.html">
+<meta property="og:site_name" content="PiaoNiao&#39;s Blog">
+<meta property="og:description" content="什么是高可用先逛一逛百科和博客……  高可用通常是指，通过设计减少系统不能提供服务的时间。 高可用通常来描述一个系统经过专门的设计，从而减少停工时间，而保持其服务的高度可用性。 高可用指系统无中断地执行其功能的能力，代表系統的可用性程度。  定义什么的就这样吧…… 核心准则看到一篇文章的作者总结得很好（究竟啥才是互联网架构“高可用”）： 保证系统高可用，架构设计的核心准则是：冗余 想想其实也挺好理">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-23T03:24:19.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高可用">
+<meta name="twitter:description" content="什么是高可用先逛一逛百科和博客……  高可用通常是指，通过设计减少系统不能提供服务的时间。 高可用通常来描述一个系统经过专门的设计，从而减少停工时间，而保持其服务的高度可用性。 高可用指系统无中断地执行其功能的能力，代表系統的可用性程度。  定义什么的就这样吧…… 核心准则看到一篇文章的作者总结得很好（究竟啥才是互联网架构“高可用”）： 保证系统高可用，架构设计的核心准则是：冗余 想想其实也挺好理">
+
+
+
+
+
+
+  <link rel="canonical" href="https://github.com/piaoniao/2019/11/23/high-availability/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>高可用 | PiaoNiao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PiaoNiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/piaoniao/2019/11/23/high-availability/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PiaoNiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PiaoNiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">高可用
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-11-23 11:24:37 / Modified: 11:24:19" itemprop="dateCreated datePublished" datetime="2019-11-23T11:24:37+08:00">2019-11-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是高可用"><a href="#什么是高可用" class="headerlink" title="什么是高可用"></a>什么是<code>高可用</code></h3><p>先逛一逛百科和博客……</p>
+<ul>
+<li><code>高可用</code>通常是指，通过设计减少系统不能提供服务的时间。</li>
+<li><code>高可用</code>通常来描述一个系统经过专门的设计，从而减少停工时间，而保持其服务的高度可用性。</li>
+<li><code>高可用</code>指系统无中断地执行其功能的能力，代表系統的可用性程度。</li>
+</ul>
+<p>定义什么的就这样吧……</p>
+<h3 id="核心准则"><a href="#核心准则" class="headerlink" title="核心准则"></a>核心准则</h3><p>看到一篇文章的作者总结得很好（<a href="https://www.w3cschool.cn/architectroad/architectroad-high-availability.html" target="_blank" rel="noopener">究竟啥才是互联网架构“高可用”</a>）：</p>
+<p><strong>保证系统高可用，架构设计的核心准则是：冗余</strong></p>
+<p>想想其实也挺好理解，如果运行一个系统的资源是冗余的，那就更能应对突发的情况，如：流量激增、部分服务故障、电缆被砍等。</p>
+<p>所以当我们看到一个产品、或系统、或服务说自己是<code>高可用</code>时，就可以留意它在哪些资源上做了冗余，而这些冗余能抵御的又是哪些故障。</p>
+<h3 id="容错机制"><a href="#容错机制" class="headerlink" title="容错机制"></a>容错机制</h3><p>即使系统的资源是冗余的，也还是需要一定的手段或说机制，来保证系统的高可用运作起来</p>
+<ul>
+<li><p>自动侦查（Auto-Detect）</p>
+<p>就是系统要能监控资源的可用情况，那系统又是如何进行监控？定时检查？以任务执行状态判断？</p>
+</li>
+<li><p>自动切换（Auto-Switch）</p>
+<p>就是系统检测到存在资源不可用时，该如何用上其冗余的资源？</p>
+</li>
+<li><p>自动恢复（Auto-Recovery）</p>
+<p>就是在故障资源修复完成后，如何通知系统重新用上该资源？</p>
+</li>
+<li><p>其它</p>
+<p>觉得还有许多其它的机制也可以为<code>高可用</code>服务：扩容、缩容、重载、降级、削锋……</p>
+</li>
+</ul>
+<h3 id="工作方式"><a href="#工作方式" class="headerlink" title="工作方式"></a>工作方式</h3><p>百度百科有一段介绍高可用的“工作方式”，但我想这一块应该主要是想探讨系统的各资源之间可能存在的关系：</p>
+<ul>
+<li><p>主从（非对称）</p>
+<p>主资源工作，冗余资源处于监控准备状态。当主资源发生故障时，冗余资源接管工作，待主资源恢复正常后，将切换并重新使用主资源，或者不切换作为冗余资源。</p>
+</li>
+<li><p>双机双工（互备互换）</p>
+<p>两个资源同时支持各自的系统服务并相互监测运行情况，当其中一个资源发生故障时，另一个资源立刻接管其工作。</p>
+</li>
+<li><p>集群（多服务器互备）</p>
+<p>要解析<code>集群</code>可能要新开一篇总结了…..</p>
+<p>搭建集群系统，是为了<code>单点故障</code>:</p>
+<ul>
+<li>消除供电的单点故障</li>
+<li>消除磁盘的单点故障</li>
+<li>消除 SPU（System Process Unit）单点故障</li>
+<li>消除网络单点故障</li>
+<li>消除软件单点故障</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+<h3 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h3><p>说了这么多，那具体我们又要在哪些地方实施<code>高可用</code>策略？这就涉及到系统架构设计的整个流程了……</p>
+<p>……</p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://www.w3cschool.cn/architectroad/architectroad-high-availability.html" target="_blank" rel="noopener">究竟啥才是互联网架构“高可用”</a></p>
+<p><a href="[https://baike.baidu.com/item/%E9%AB%98%E5%8F%AF%E7%94%A8%E6%80%A7](https://baike.baidu.com/item/高可用性">百度百科：高可用性</a>)</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高可用/" rel="tag"># 高可用</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/06/cellular-automata/" rel="next" title="元胞自动机">
+                <i class="fa fa-chevron-left"></i> 元胞自动机
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">PiaoNiao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是高可用"><span class="nav-number">1.</span> <span class="nav-text">什么是高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心准则"><span class="nav-number">2.</span> <span class="nav-text">核心准则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容错机制"><span class="nav-number">3.</span> <span class="nav-text">容错机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作方式"><span class="nav-number">4.</span> <span class="nav-text">工作方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实施"><span class="nav-number">5.</span> <span class="nav-text">实施</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考："><span class="nav-number">6.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PiaoNiao</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
